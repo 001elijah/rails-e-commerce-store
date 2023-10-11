@@ -66,3 +66,13 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.9', '>= 4.9.2'
+
+# Install Bootstrap in your Ruby app.
+# Bootstrap is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.
+gem 'bootstrap', '~> 5.3.0'
+
+# Jquery
+gem 'jquery-rails'

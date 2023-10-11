@@ -1,0 +1,27 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right d-flex flex-row gap-3">
+            <% if user_signed_in? %>
+                <li><%= link_to current_user.email, edit_user_registration_path %></li>
+                <li><%= button_to "Logout", destroy_user_session_path, method: :delete %></li>
+            <% else %>
+                <li><%= link_to "Sign Up", new_user_registration_path %></li>
+                <li><%= link_to "Login", new_user_session_path %></li>
+            <% end %>
+        </ul>
+    </div>
+</nav>

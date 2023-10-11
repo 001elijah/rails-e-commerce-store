@@ -87,8 +87,12 @@ Setup database:
 
 `source ~/.bashrc`
 
-`rails db:create` — create db
+`rake db:create` or `rails db:create` — create db
 
 `bin/rails server` or `rails server` or `rails s` — to start the rails server
+
+if you've messed up your database, you may need `rake db:reset` command to drop your db and create again
+
+if you need to [add]('https://www.bogotobogo.com/RubyOnRails/RubyOnRails_Devise_Adding_User_Field_and_Customization_Update_Saved.php') a column to existing db, i.e first_name to users table: `rails generate migration add_first_name_to_users first_name:string`, then `rake db:migrate`
 
 * ...

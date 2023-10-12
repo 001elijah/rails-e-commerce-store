@@ -5,16 +5,17 @@
   <div class="card-body">
     <h1 class="card-title pricing-card-title">$<%= item.price %></h1>
     <p class="d-block mt-3 mb-4"><%= item.description %></p>
-    <div>
+    <div class="">
       <% if user_signed_in? %>
-        <%= form_with(url: cart_add_path) do |f| %>
+        <%= form_with(url: cart_add_path, class: 'w-100 d-flex flex-sm-nowrap justify-content-center gap-2') do |f| %>
           <%= f.hidden_field :id, value: item.id %>
-          <%= f.number_field :quantity, value: 0, min: 1 %>
-          <%= f.submit "Add To Cart" %>
-          <button type="button" class="btn btn-sm btn-primary">Add to cart</button>
-        <% end %>
-        <%= link_to item do %>
-          <button type="button" class="btn btn-sm btn-outline-secondary">Show this item</button>
+          <%= f.number_field :quantity, value: 0, min: 1, max: 999999, class: 'form-control', style: 'width: 70px' %>
+          <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary") do %>
+            Add to cart
+          <% end %>
+          <%= link_to item do %>
+            <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 90px; height: 38px">Show item</button>
+          <% end %>
         <% end %>
       <% else %>
         <%= link_to new_user_session_path, class: 'text-decoration-none' do %>

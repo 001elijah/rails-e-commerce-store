@@ -1,24 +1,42 @@
-<% @cart.orderables.each do |orderable| %>
-  <% item = orderable.item %>
-  <div id="<%= "cart-#{item.id}" %>">
-    <div style="display:flex;justify-content:space-between;margin: 0em 5em;">
-      <strong>Name:</strong>
-      <%= item.name %>
-      <strong>Description:</strong>
-      <%= item.description %>
-      <strong>Price:</strong>
-      <%= item.price %>
-      <%= form_with(url: cart_add_path) do |f| %>
-        <%= f.hidden_field :id, value: item.id %>
-        <%= f.number_field :quantity, value: orderable.quantity, min: 0 %>
-        <%= f.submit "Add To Cart" %>
+<div class="w-90 overflow-scroll">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center align-middle">Name</th>
+        <th scope="col" class="text-center align-middle">Description</th>
+        <th scope="col" class="text-center align-middle">Price</th>
+        <th scope="col" class="text-center align-middle">Manage</th>
+        <th scope="col" class="text-center align-middle">Total</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart.orderables.each do |orderable| %>
+        <% item = orderable.item %>
+        <tr id="<%= "cart-#{item.id}" %>">
+          <td class="text-center align-middle"><%= item.name %></td>
+          <td class="text-center align-middle"><%= item.description %></td>
+          <td class="text-center align-middle"><%= item.price %></td>
+          <td>
+            <%= form_with(url: cart_add_path, class: 'w-100 d-flex flex-sm-nowrap d-flex justify-content-center align-items-center gap-2') do |f| %>
+              <%= f.hidden_field :id, value: item.id %>
+              <%= f.number_field :quantity, value: 0, min: 1, max: 999999, class: 'form-control', style: 'width: 70px' %>
+              <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary") do %>
+                Add more
+              <% end %>
+            <% end %>
+          </td>
+          <td class="text-center align-middle"><%= orderable.total %></td>
+          <td class="text-center align-middle">
+            <%= form_with(url: cart_remove_path, class: 'd-inline-block w-100 h-100') do |f| %>
+              <%= f.hidden_field :id, value: orderable.id %>
+              <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary bg-danger border-danger") do %>
+                X
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
-      <%= form_with(url: cart_remove_path) do |f| %>
-        <%= f.hidden_field :id, value: orderable.id %>
-        <%= f.submit "X" %>
-      <% end %>
-      <strong>Total:</strong>
-      <%= orderable.total %>
-    </div>
-  </div>
-<% end %>
+    </tbody>
+  </table>
+</div>

@@ -10,9 +10,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-white">
     <%= render 'layouts/header' %>
-    <div class="container">
+    <div class="container" style="min-height: calc(100vh - 177px)">
       <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
       <% if alert %><div class="alert alert-warning"><%= alert %></div><% end %>
       <%= render partial: "cart/cart" if @render_cart %>

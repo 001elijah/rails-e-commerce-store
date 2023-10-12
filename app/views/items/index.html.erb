@@ -1,12 +1,12 @@
 <div class="d-flex flex-row gap-4">
-  <h1>Items</h1>
+  <h1 class="text-secondary">Items</h1>
   <% if user_signed_in? %>
     <%= link_to new_item_path do%>
-      <button type="button" class="btn btn-lg btn-block btn-primary mb-4">Add new item</button>
+      <button type="button" class="btn btn-lg btn-block btn-outline-primary mb-4">Add new</button>
     <% end %>
   <% else %>
     <%= link_to new_user_session_path do%>
-      <button type="button" class="btn btn-lg btn-block btn-primary mb-4">Add new item</button>
+      <button type="button" class="btn btn-lg btn-block btn-outline-primary mb-4">Add new</button>
     <% end %>
   <% end %>
 </div>

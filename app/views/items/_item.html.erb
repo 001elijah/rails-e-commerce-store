@@ -7,7 +7,12 @@
     <p class="d-block mt-3 mb-4"><%= item.description %></p>
     <div>
       <% if user_signed_in? %>
-        <button type="button" class="btn btn-sm btn-primary">Add to cart</button>
+        <%= form_with(url: cart_add_path) do |f| %>
+          <%= f.hidden_field :id, value: item.id %>
+          <%= f.number_field :quantity, value: 0, min: 1 %>
+          <%= f.submit "Add To Cart" %>
+          <button type="button" class="btn btn-sm btn-primary">Add to cart</button>
+        <% end %>
         <%= link_to item do %>
           <button type="button" class="btn btn-sm btn-outline-secondary">Show this item</button>
         <% end %>

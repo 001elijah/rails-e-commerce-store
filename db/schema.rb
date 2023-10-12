@@ -10,9 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_12_054631) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_12_162900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "carts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "items", force: :cascade do |t|
     t.string "name"
@@ -22,15 +27,29 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_12_054631) do
     t.decimal "price", precision: 8, scale: 2
   end
 
-  create_table "orders", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "amount"
+  create_table "orderables", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.bigint "cart_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_orderables_on_cart_id"
+    t.index ["item_id"], name: "index_orderables_on_item_id"
   end
 
-  create_table "orders_description", id: false, force: :cascade do |t|
-    t.integer "order_id"
-    t.integer "item_id"
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders_descriptions", force: :cascade do |t|
+    t.bigint "items_id", null: false
+    t.bigint "orders_id", null: false
     t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["items_id"], name: "index_orders_descriptions_on_items_id"
+    t.index ["orders_id"], name: "index_orders_descriptions_on_orders_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,4 +67,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_12_054631) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "orderables", "carts"
+  add_foreign_key "orderables", "items"
+  add_foreign_key "orders_descriptions", "items", column: "items_id"
+  add_foreign_key "orders_descriptions", "orders", column: "orders_id"
 end

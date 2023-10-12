@@ -108,3 +108,7 @@ and `rails d scaffold Item` to delete, and `rails g scaffold Item name` to gener
 `rails generate migration add_description_to_items description:text` add description column to items table
 
 `rails generate migration add_price_to_items price:decimal{8,2}` add price column to items table
+
+* ...
+
+to create a cart I've used the [video](https://www.youtube.com/watch?v=SPokmOwiM7E&ab_channel=Deanin) as reference

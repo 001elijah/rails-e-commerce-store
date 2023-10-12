@@ -1,0 +1,6 @@
+<h1>Your Cart</h1>
+<% @cart.orderables.each do |orderable| %>
+  <% item = orderable.item %>
+  <p><%= item.name %> * <%= orderable.quantity %> = $<%= item.price * orderable.quantity %></p>
+<% end %>
+<p>Your total is $<%= @cart.total %> </p>

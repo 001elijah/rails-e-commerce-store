@@ -1,0 +1,24 @@
+<div class="card mb-4 box-shadow" style="width: 325px" id="<%= dom_id item %>">
+  <div class="card-header">
+    <h4 class="my-0 font-weight-normal"><%= item.name %></h4>
+  </div>
+  <div class="card-body">
+    <h1 class="card-title pricing-card-title">$<%= item.price %></h1>
+    <p class="d-block mt-3 mb-4"><%= item.description %></p>
+    <div>
+      <% if user_signed_in? %>
+        <button type="button" class="btn btn-sm btn-primary">Add to cart</button>
+        <%= link_to item do %>
+          <button type="button" class="btn btn-sm btn-outline-secondary">Show this item</button>
+        <% end %>
+      <% else %>
+        <%= link_to new_user_session_path, class: 'text-decoration-none' do %>
+          <button type="button" class="btn btn-sm btn-primary">Add to cart</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary">Show this item</button>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+

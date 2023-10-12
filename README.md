@@ -98,3 +98,13 @@ if you've messed up your database, you may need `rake db:reset` command to drop 
 if you need to [add](https://www.bogotobogo.com/RubyOnRails/RubyOnRails_Devise_Adding_User_Field_and_Customization_Update_Saved.php) a column to existing db, i.e first_name to users table: `rails generate migration add_first_name_to_users first_name:string`, then `rake db:migrate`
 
 * ...
+
+`rails g scaffold Item name` or `rails g scaffold Item name:text description:text price:decimal{8,2}` - to generate Item name creation template
+
+if controller exists run `cp app/controllers/items_controller.rb app/controllers/items_controller_backup.rb`
+
+and `rails d scaffold Item` to delete, and `rails g scaffold Item name` to generate the scaffold again
+
+`rails generate migration add_description_to_items description:text` add description column to items table
+
+`rails generate migration add_price_to_items price:decimal{8,2}` add price column to items table

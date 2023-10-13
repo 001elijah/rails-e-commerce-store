@@ -4,9 +4,11 @@
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/cart">Cart</a>
-            </li>
+            <% if user_signed_in? %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
+            <% end %>
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
             </li>
@@ -15,7 +17,7 @@
             <% if user_signed_in? %>
                 <p class="my-0 text-secondary"><%= current_user.first_name %> <%= current_user.role %> </p>
                 <li><%= link_to current_user.email, edit_user_registration_path %></li>
-                <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-lg btn-block btn-outline-primary" %></li>
+                <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-sm btn-block btn-outline-primary" %></li>
             <% else %>
                 <%= link_to new_user_registration_path do%>
                     <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up</button>

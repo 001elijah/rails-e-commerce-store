@@ -1,4 +1,4 @@
-<div class="overflow-scroll" style="max-width: 350px">
+<div class="overflow-scroll" style="max-width: 375px">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -15,7 +15,7 @@
         <tr id="<%= "cart-#{item.id}" %>">
           <td class="text-center align-middle"><%= item.name %></td>
           <td class="text-center align-middle"><%= item.description %></td>
-          <td class="text-center align-middle"><%= item.price %></td>
+          <td class="text-center align-middle"><%= item.price %> * <%= orderable.quantity%></td>
           <td class="text-center align-middle"><%= orderable.total %></td>
           <td class="text-center align-middle">
             <%= form_with(url: cart_remove_path, class: 'd-inline-block w-100 h-100') do |f| %>
@@ -28,6 +28,6 @@
         </tr>
       <% end %>
     </tbody>
-  </table>
+    </table>
 </div>
 <p>Total: $<%= @cart.total %></p>

@@ -95,7 +95,9 @@ Setup database:
 
 if you've messed up your database, you may need `rake db:reset` command to drop your db and create again
 
-if you need to [add](https://www.bogotobogo.com/RubyOnRails/RubyOnRails_Devise_Adding_User_Field_and_Customization_Update_Saved.php) a column to existing db, i.e first_name to users table: `rails generate migration add_first_name_to_users first_name:string`, then `rake db:migrate`
+If you `is being accessed by other users error`, you'll need to logout from database by running `SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'dbname';` as admin and superuser
+
+if you need to [add](https://edgeguides.rubyonrails.org/active_record_migrations.html#creating-a-standalone-migration) a column to existing db, i.e first_name to users table: `rails generate migration add_first_name_to_users first_name:string`, then `rake db:migrate`
 
 * ...
 

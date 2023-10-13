@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :orders
   get 'cart', to: 'cart#show'
   post 'cart/add'
   post 'cart/remove'

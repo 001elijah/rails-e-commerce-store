@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
+    Cart.destroy_all
 
     respond_to do |format|
       if @order.save

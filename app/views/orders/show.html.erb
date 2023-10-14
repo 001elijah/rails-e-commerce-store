@@ -1,5 +1,14 @@
+<h1 class="text-secondary">Thank you! We are processing your order:</h1>
 <%= render @order %>
 
-<%= link_to root_path  do %>
-  <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 90px; height: 38px">To shop</button>
+<div>
+  <%= link_to orders_path do %>
+    <button type="button" class="mb-3 btn btn-sm btn-primary" style="min-width: 90px; height: 38px">Orders history</button>
+  <% end %>
+</div>
+
+<div>
+  <%= link_to root_path do %>
+  <button type="button" class="mb-3 btn btn-sm btn-outline-secondary" style="min-width: 90px; height: 38px">To shop</button>
 <% end %>
+</div>

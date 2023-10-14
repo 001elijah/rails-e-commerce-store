@@ -3,8 +3,8 @@
     <%= f.hidden_field :user_id, value: current_user.id %>
     <%= f.hidden_field :amount, value: @cart.total %>
     <%= f.hidden_field :id, value: @cart.id %>
-    <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary bg-success border-success") do %>
-      Buy
+    <%= button_tag(type: 'submit', class: "w-25 btn btn-lg btn-primary bg-success border-success") do %>
+      Confirm
     <% end %>
   <% end %>
 <% end %>

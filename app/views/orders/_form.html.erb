@@ -1,27 +1,10 @@
-<%= form_with(model: order) do |form| %>
-  <% if order.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-        <% order.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+<% if @cart.orderables.count > 0 %>
+  <%= form_with(model: order) do |f| %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :amount, value: @cart.total %>
+    <%= f.hidden_field :id, value: @cart.id %>
+    <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary bg-success border-success") do %>
+      Buy
+    <% end %>
   <% end %>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div>
-    <%= form.label :amount, style: "display: block" %>
-    <%= form.text_field :amount %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

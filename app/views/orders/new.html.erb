@@ -1,9 +1,9 @@
-<h1>New order</h1>
-
 <%= render "form", order: @order %>
 
 <br>
 
 <div>
-  <%= link_to "Back to orders", orders_path %>
+  <%= link_to root_path  do %>
+    <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 90px; height: 38px">To shop</button>
+  <% end %>
 </div>

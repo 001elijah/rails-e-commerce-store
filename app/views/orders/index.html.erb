@@ -1,14 +1,33 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="text-secondary">Orders history</h1>
 
-<h1>Orders</h1>
+<p>
+  For
+  <%= current_user.role %>
+  <%= current_user.first_name %>
+  <%= current_user.last_name %>
+  <%= current_user.email %>
+</p>
 
 <div id="orders">
-  <% @orders.each do |order| %>
-    <%= render order %>
-    <p>
-      <%= link_to "Show this order", order %>
-    </p>
+  <% if current_user.role === 'admin' %>
+    <% if @orders.count > 0 %>
+      <% @orders.each do |order| %>
+        <%= render order %>
+      <% end %>
+    <% else %>
+      <p>No one made no orders yet</p>
+    <% end %>
+  <% else %>
+    <% if @current_user_orders.count > 0 %>
+      <% @current_user_orders.each do |order| %>
+        <%= render order %>
+      <% end %>
+    <% else %>
+      <p>You've made no orders yet</p>
+    <% end %>
   <% end %>
 </div>
 
-<%= link_to "New order", new_order_path %>
+<%= link_to root_path  do %>
+  <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 90px; height: 38px">To shop</button>
+<% end %>

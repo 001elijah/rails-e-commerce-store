@@ -16,6 +16,11 @@
       <% if notice %><div class="mt-3 alert alert-info"><%= notice %></div><% end %>
       <% if alert %><div class="mt-3 alert alert-warning"><%= alert %></div><% end %>
       <%= render partial: "cart/cart" if @render_cart %>
+      <% if current_page?(root_path) %>
+        <%= link_to new_order_path  do %>
+          <button type="button" class="btn btn-sm btn-outline-secondary">Go make order</button>
+        <% end %>
+      <% end %>
       <%= yield %>
     </div>
     <%= render 'layouts/footer' %>

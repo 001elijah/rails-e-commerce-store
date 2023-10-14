@@ -23,10 +23,10 @@
                 <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-sm btn-block btn-outline-primary" %></li>
             <% else %>
                 <%= link_to new_user_registration_path do%>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up</button>
+                    <button type="button" class="btn btn-sm btn-block btn-outline-primary">Sign up</button>
                 <% end %>
                 <%= link_to new_user_session_path do%>
-                    <button type="button" class="btn btn-lg btn-block btn-primary">Login</button>
+                    <button type="button" class="btn btn-sm btn-block btn-primary">Login</button>
                 <% end %>
             <% end %>
         </ul>

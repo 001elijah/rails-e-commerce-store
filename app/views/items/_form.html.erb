@@ -13,18 +13,18 @@
 
   <div class="mb-2">
     <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'form-control' %>
   </div>
   <div class="mb-2">
     <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+    <%= form.text_field :description, class: 'form-control' %>
   </div>
   <div class="mb-2">
     <%= form.label :price, style: "display: block" %>
-    <%= form.text_field :price %>
+    <%= form.text_field :price, class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
+  <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary") do %>
+      Save
+  <% end %>
 <% end %>

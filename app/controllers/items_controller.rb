@@ -8,15 +8,18 @@ class ItemsController < ApplicationController
 
   # GET /items/1 or /items/1.json
   def show
+    @render_cart = false
   end
 
   # GET /items/new
   def new
     @item = Item.new
+    @render_cart = false
   end
 
   # GET /items/1/edit
   def edit
+    @render_cart = false
   end
 
   # POST /items or /items.json

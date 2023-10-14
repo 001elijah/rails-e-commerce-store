@@ -1,11 +1,7 @@
 <div class="my-3 d-flex flex-row gap-4 align-items-center">
   <h1 class="text-secondary">Items</h1>
-  <% if user_signed_in? %>
+  <% if user_signed_in? && current_user.role === 'admin' %>
     <%= link_to new_item_path do%>
-      <button type="button" class="btn btn-sm btn-block btn-outline-primary">Add new</button>
-    <% end %>
-  <% else %>
-    <%= link_to new_user_session_path do%>
       <button type="button" class="btn btn-sm btn-block btn-outline-primary">Add new</button>
     <% end %>
   <% end %>

@@ -7,14 +7,18 @@
     <p class="d-block mt-3 mb-4"><%= item.description %></p>
     <div class="">
       <% if user_signed_in? %>
-        <%= form_with(url: cart_add_path, class: 'w-100 d-flex flex-sm-nowrap justify-content-center gap-2') do |f| %>
-          <%= f.hidden_field :id, value: item.id %>
-          <%= f.number_field :quantity, value: 0, min: 1, max: 999999, class: 'form-control', style: 'width: 70px' %>
-          <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary") do %>
-            Add to cart
-          <% end %>
-          <%= link_to item do %>
-            <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 90px; height: 38px">Show item</button>
+        <% unless request.env['PATH_INFO'] === "/items/#{item.id}" %>
+          <%= form_with(url: cart_add_path, class: 'w-100 d-flex flex-sm-nowrap justify-content-center gap-2') do |f| %>
+            <%= f.hidden_field :id, value: item.id %>
+            <%= f.number_field :quantity, value: 0, min: 1, max: 999999, class: 'form-control', style: 'width: 70px' %>
+            <%= button_tag(type: 'submit', class: "btn btn-sm btn-primary") do %>
+              Add to cart
+            <% end %>
+            <% if current_user.role === 'admin' %>
+              <%= link_to item do %>
+                <button type="button" class="btn btn-sm btn-outline-secondary" style="width: 90px; height: 38px">Show item</button>
+              <% end %>
+            <% end %>
           <% end %>
         <% end %>
       <% else %>

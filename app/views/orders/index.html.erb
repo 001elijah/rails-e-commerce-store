@@ -11,17 +11,45 @@
 <div id="orders">
   <% if current_user.role === 'admin' %>
     <% if @orders.count > 0 %>
-      <% @orders.each do |order| %>
-        <%= render order %>
-      <% end %>
+      <div class="w-90 overflow-scroll">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center align-middle">User id</th>
+                <th scope="col" class="text-center align-middle">User name</th>
+                <th scope="col" class="text-center align-middle">Amount</th>
+                <th scope="col" class="text-center align-middle">Date</th>
+              </tr>
+            </thead>  
+            <tbody>
+              <% @orders.each do |order| %>
+                <%= render order %>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
     <% else %>
       <p>No one made no orders yet</p>
     <% end %>
   <% else %>
     <% if @current_user_orders.count > 0 %>
-      <% @current_user_orders.each do |order| %>
-        <%= render order %>
-      <% end %>
+          <div class="w-90 overflow-scroll">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col" class="text-center align-middle">User id</th>
+                  <th scope="col" class="text-center align-middle">User name</th>
+                  <th scope="col" class="text-center align-middle">Amount</th>
+                  <th scope="col" class="text-center align-middle">Date</th>
+                </tr>
+              </thead>  
+                <tbody>
+                  <% @current_user_orders.each do |order| %>
+                    <%= render order %>
+                  <% end %>
+                </tbody>
+              </table>
+          </div>
     <% else %>
       <p>You've made no orders yet</p>
     <% end %>

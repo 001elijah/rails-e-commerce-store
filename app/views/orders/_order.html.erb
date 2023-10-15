@@ -1,20 +1,6 @@
-<div class="w-90 overflow-scroll" id="<%= dom_id order %>" >
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col" class="text-center align-middle">User id</th>
-        <th scope="col" class="text-center align-middle">User name</th>
-        <th scope="col" class="text-center align-middle">Amount</th>
-        <th scope="col" class="text-center align-middle">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr id="<%= "cart-#{order.id}" %>">
-        <td class="text-center align-middle"><%= order.user_id %></td>
-        <td class="text-center align-middle"><%= order.user.first_name %></td>
-        <td class="text-center align-middle">$<%= order.amount %></td>
-        <td class="text-center align-middle"><%= order.created_at.strftime('%m/%d/%Y') %></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<tr id="<%= dom_id order %>">
+  <td class="text-center align-middle"><%= order.user_id %></td>
+  <td class="text-center align-middle"><%= order.user.first_name %></td>
+  <td class="text-center align-middle">$<%= order.amount %></td>
+  <td class="text-center align-middle"><%= order.created_at.strftime('%m/%d/%Y') %></td>
+</tr>

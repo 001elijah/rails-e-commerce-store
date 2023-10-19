@@ -7,8 +7,8 @@ import { useState } from "react";
 import ModalPortal from "../ModalPortal/ModalPortal";
 import AddNewItemModal from "../AddNewItemModal/AddNewItemModal";
 
-const ItemsList = ({ onManageItems, items }) => {
-  const [enableTableView, setEnableTableView] = useState(true);
+const ItemsList = ({ onManageItems, items, cart, setCart }) => {
+  const [enableTableView, setEnableTableView] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = async () => {
@@ -30,6 +30,7 @@ const ItemsList = ({ onManageItems, items }) => {
         <CustomAccentButton
           type="button"
           title="Add new"
+          style={s.addNewBtn}
           onClick={handleOpenModal}
         />
       </div>
@@ -46,6 +47,8 @@ const ItemsList = ({ onManageItems, items }) => {
                   name={item.name}
                   description={item.description}
                   price={item.price}
+                  cart={cart}
+                  setCart={setCart}
                 />
               </li>
             );
@@ -64,6 +67,8 @@ const ItemsList = ({ onManageItems, items }) => {
 };
 
 ItemsList.propTypes = {
+  cart: PropTypes.array.isRequired,
+  setCart: PropTypes.func.isRequired,
   onManageItems: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
 };

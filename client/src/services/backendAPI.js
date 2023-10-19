@@ -4,14 +4,14 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:3000";
 
-const token = {
-  set(token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  },
-  unset() {
-    axios.defaults.headers.common.Authorization = "";
-  },
-};
+// const token = {
+//   set(token) {
+//     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+//   },
+//   unset() {
+//     axios.defaults.headers.common.Authorization = "";
+//   },
+// };
 
 // --------------------------------------------ITEMS----------------------//
 
@@ -40,4 +40,18 @@ export const editItemApi = async ({ id, name, description, price }) => {
 export const destroyItemApi = async (id) => {
   //   token.set(userToken);
   await axios.delete(`/items/${id}.json`);
+};
+
+// --------------------------------------------ORDERS----------------------//
+
+export const addOrderApi = async (orderData) => {
+  //   token.set(userToken);
+  const { data } = await axios.post("/orders.json", orderData);
+  return data;
+};
+
+export const getAllOrdersApi = async () => {
+  //   token.set(userToken);
+  const { data } = await axios.get("/orders.json");
+  return data;
 };

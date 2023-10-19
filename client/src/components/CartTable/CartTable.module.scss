@@ -1,8 +1,15 @@
 @import "../../assets/styles/mixins";
 @import "../../assets/styles/vars";
 
+.qtyWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
 .styledInput {
-  max-width: 100px;
+  max-width: 80px;
   padding: 0px 18px;
 
   border-radius: 12px;
@@ -47,4 +54,16 @@
 .saveBtn {
   @extend .destroyBtn;
   background: $accept-color;
+}
+
+.buyBtn {
+    @extend .saveBtn;
+    width: 100px;
+}
+
+.totalPrice {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

@@ -1,0 +1,8 @@
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/vars";
+
+.tableWrapper {
+    width: 100%;
+    max-height: calc(100vh - 188px);
+    overflow-y: scroll;
+}

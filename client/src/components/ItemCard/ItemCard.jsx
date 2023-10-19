@@ -6,8 +6,17 @@ import ModalPortal from "../ModalPortal/ModalPortal";
 import EditItemModal from "../EditItemModal/EditItemModal";
 import { destroyItemApi } from "../../services/backendAPI";
 
-const ItemCard = ({ onManageItems, id, name, description, price }) => {
+const ItemCard = ({
+  onManageItems,
+  id,
+  name,
+  description,
+  price,
+  cart,
+  setCart,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemQuantity, setItemQuantity] = useState(1);
 
   const handleOpenModal = async () => {
     setIsModalOpen(true);
@@ -18,6 +27,23 @@ const ItemCard = ({ onManageItems, id, name, description, price }) => {
       prevItems.filter((prevItem) => prevItem.id !== id),
     );
   };
+
+  const handleAddToCart = () => {
+    const item = { id, name, description, price, quantity: +itemQuantity };
+    if (!cart.find((cartItem) => cartItem.id === item.id)) {
+      setCart((prevItems) => [...prevItems, item]);
+    } else {
+      const nextCart = cart.map((cartItem) => {
+        if (cartItem.id === item.id) {
+          return { ...cartItem, quantity: +cartItem.quantity + +item.quantity };
+        } else {
+          return cartItem;
+        }
+      });
+      setCart(nextCart);
+    }
+  };
+
   return (
     <>
       <div className={s.cardWrapper}>
@@ -30,6 +56,7 @@ const ItemCard = ({ onManageItems, id, name, description, price }) => {
           <CustomAccentButton
             type="button"
             title="Destroy"
+            style={s.destroyBtn}
             onClick={handleDestroyItem}
           />
         </div>
@@ -41,6 +68,22 @@ const ItemCard = ({ onManageItems, id, name, description, price }) => {
             </div>
             <span className={s.bigBoldText}>${price}</span>
           </div>
+        </div>
+        <div className={s.bottomControlsWrapper}>
+          <input
+            className={s.styledInput}
+            type="number"
+            name="quantity"
+            min="0"
+            value={itemQuantity}
+            onChange={(e) => setItemQuantity(e.target.value)}
+          />
+          <CustomAccentButton
+            type="button"
+            title="Add to cart"
+            style={s.addToCartBtn}
+            onClick={handleAddToCart}
+          />
         </div>
       </div>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
@@ -64,6 +107,8 @@ ItemCard.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
+  cart: PropTypes.array.isRequired,
+  setCart: PropTypes.func.isRequired,
 };
 
 export default ItemCard;

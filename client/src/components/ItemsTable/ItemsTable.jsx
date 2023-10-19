@@ -9,33 +9,38 @@ import Paper from "@mui/material/Paper";
 import CustomAccentButton from "../CustomAccentButton/CustomAccentButton";
 import { useState } from "react";
 import { destroyItemApi, editItemApi } from "../../services/backendAPI";
-import s from "./ItemsTable.module.scss"
+import s from "./ItemsTable.module.scss";
 
 const ItemRow = ({ row, onManageItems }) => {
   const { id, name, description, price, created_at, updated_at } = row;
-  const [itemName, setItemName] = useState(name)
-  const [itemDescription, setItemDescription] = useState(description)
-  const [itemPrice, setItemPrice] = useState(price)
+  const [itemName, setItemName] = useState(name);
+  const [itemDescription, setItemDescription] = useState(description);
+  const [itemPrice, setItemPrice] = useState(price);
   const [editable, setEditable] = useState(false);
 
   const handleEditItem = () => {
     setEditable(!editable);
-  }
+  };
 
   const handleSaveItem = async (id) => {
-    const item = await editItemApi({ id, name: itemName, description: itemDescription, price: itemPrice });
+    const item = await editItemApi({
+      id,
+      name: itemName,
+      description: itemDescription,
+      price: itemPrice,
+    });
     setEditable(false);
-      onManageItems((prevItems) => {
-        const nextItems = prevItems.map((prevItem) => {
-          if (prevItem.id === item.id) {
-            return { ...prevItem, ...item };
-          } else {
-            return prevItem;
-          }
-        });
-        return nextItems;
+    onManageItems((prevItems) => {
+      const nextItems = prevItems.map((prevItem) => {
+        if (prevItem.id === item.id) {
+          return { ...prevItem, ...item };
+        } else {
+          return prevItem;
+        }
       });
-  }
+      return nextItems;
+    });
+  };
 
   const handleDestroyItem = async (id) => {
     await destroyItemApi(id);
@@ -51,16 +56,86 @@ const ItemRow = ({ row, onManageItems }) => {
       <TableCell component="th" scope="row">
         {id}
       </TableCell>
-      <TableCell align="right">{editable ? <input className={s.styledInput} type="text" name="name" value={itemName} onChange={e => setItemName(e.target.value)}/> : name}</TableCell>
-      <TableCell align="right">{editable ? <input className={s.styledInput} type="text" name="description" value={itemDescription} onChange={e => setItemDescription(e.target.value)}/> : description}</TableCell>
-      <TableCell align="right">{editable ? <input className={s.styledInput} type="text" name="price" value={itemPrice} onChange={e => setItemPrice(e.target.value)} /> : `$${price}`}</TableCell>
-      <TableCell align="right">{new Date(created_at).toLocaleDateString("en-US")}</TableCell>
-      <TableCell align="right">{new Date(updated_at).toLocaleDateString("en-US")}</TableCell>
-      <TableCell align="right">{editable ? <CustomAccentButton type="button" title="Save" onClick={() => handleSaveItem(row.id)} /> : <CustomAccentButton type="button" title="Edit" onClick={handleEditItem} />}</TableCell>
-      <TableCell align="right">{editable ? <CustomAccentButton type="button" title="Cancel" onClick={handleEditItem} /> : <CustomAccentButton type="button" title="Destroy" onClick={() => handleDestroyItem(row.id)} />}</TableCell>
+      <TableCell align="right">
+        {editable ? (
+          <input
+            className={s.styledInput}
+            type="text"
+            name="name"
+            value={itemName}
+            onChange={(e) => setItemName(e.target.value)}
+          />
+        ) : (
+          name
+        )}
+      </TableCell>
+      <TableCell align="right">
+        {editable ? (
+          <input
+            className={s.styledInput}
+            type="text"
+            name="description"
+            value={itemDescription}
+            onChange={(e) => setItemDescription(e.target.value)}
+          />
+        ) : (
+          description
+        )}
+      </TableCell>
+      <TableCell align="right">
+        {editable ? (
+          <input
+            className={s.styledInput}
+            type="text"
+            name="price"
+            value={itemPrice}
+            onChange={(e) => setItemPrice(e.target.value)}
+          />
+        ) : (
+          `$${price}`
+        )}
+      </TableCell>
+      <TableCell align="right">
+        {new Date(created_at).toLocaleDateString("en-US")}
+      </TableCell>
+      <TableCell align="right">
+        {new Date(updated_at).toLocaleDateString("en-US")}
+      </TableCell>
+      <TableCell align="right">
+        {editable ? (
+          <CustomAccentButton
+            type="button"
+            title="Save"
+            style={s.saveBtn}
+            onClick={() => handleSaveItem(row.id)}
+          />
+        ) : (
+          <CustomAccentButton
+            type="button"
+            title="Edit"
+            onClick={handleEditItem}
+          />
+        )}
+      </TableCell>
+      <TableCell align="right">
+        {editable ? (
+          <CustomAccentButton
+            type="button"
+            title="Cancel"
+            onClick={handleEditItem}
+          />
+        ) : (
+          <CustomAccentButton
+            type="button"
+            title="Destroy"
+            style={s.destroyBtn}
+            onClick={() => handleDestroyItem(row.id)}
+          />
+        )}
+      </TableCell>
     </TableRow>
   );
-}
+};
 
 export default function ItemsTable({ onManageItems, rows }) {
   return (
@@ -80,7 +155,9 @@ export default function ItemsTable({ onManageItems, rows }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => <ItemRow key={row.id} row={row} onManageItems={onManageItems} />)}
+            {rows.map((row) => (
+              <ItemRow key={row.id} row={row} onManageItems={onManageItems} />
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -96,7 +173,7 @@ ItemRow.propTypes = {
     description: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     created_at: PropTypes.string.isRequired,
-    updated_at: PropTypes.string.isRequired
+    updated_at: PropTypes.string.isRequired,
   }),
 };
 

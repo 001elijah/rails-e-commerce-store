@@ -23,8 +23,6 @@ const AddNewItemModal = ({ onManageItems, isModalOpen, setIsModalOpen }) => {
       price: "",
     },
     onSubmit: async (values, actions) => {
-      //   loginAPI(values);
-      // createItemApi(values);
       const item = await addItemApi(values);
       onManageItems((items) => [...items, item]);
       console.log("onSubmit", item);

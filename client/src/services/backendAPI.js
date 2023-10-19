@@ -20,3 +20,24 @@ export const getAllItemsApi = async () => {
   const { data } = await axios.get("/items.json");
   return data;
 };
+
+export const addItemApi = async (itemData) => {
+  //   token.set(userToken);
+  const { data } = await axios.post("/items.json", itemData);
+  return data;
+};
+
+export const editItemApi = async ({ id, name, description, price }) => {
+  //   token.set(userToken);
+  const { data } = await axios.patch(`/items/${id}.json`, {
+    name,
+    description,
+    price,
+  });
+  return data;
+};
+
+export const destroyItemApi = async (id) => {
+  //   token.set(userToken);
+  await axios.delete(`/items/${id}.json`);
+};

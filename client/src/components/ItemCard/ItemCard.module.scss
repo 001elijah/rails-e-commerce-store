@@ -1,8 +1,23 @@
 @import "../../assets/styles/vars";
 @import "../../assets/styles/mixins";
 
+.cardWrapper {
+  padding: 15px;
+  border-radius: 24px;
+  box-shadow:
+    rgb(200, 208, 231) 3.2px 3.2px 8px 0px inset,
+    rgb(200, 208, 231) -3.2px -3.2px 8px 0px inset;
+}
+
+.controlsWrapper {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .itemCard {
-  width: 342px;
+  width: 312px;
   height: max-content;
   padding: 24px;
 
@@ -13,11 +28,11 @@
   position: relative;
 
   @include desktop {
-    width: 381px;
+    width: 351px;
   }
 
   @include desktopLarge {
-    width: 424px;
+    width: 394px;
   }
 }
 

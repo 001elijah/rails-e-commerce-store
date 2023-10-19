@@ -13,7 +13,11 @@ const recentCustomers = [
 ];
 
 const CartPage = () => {
-  return <div className="sectionContainer"><CartTable rows={recentCustomers} /></div>;
+  return (
+    <div className="sectionContainer">
+      <CartTable rows={recentCustomers} />
+    </div>
+  );
 };
 
 export default CartPage;

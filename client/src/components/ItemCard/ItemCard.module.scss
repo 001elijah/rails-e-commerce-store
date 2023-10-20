@@ -1,0 +1,121 @@
+@import "../../assets/styles/vars";
+@import "../../assets/styles/mixins";
+
+.cardWrapper {
+  padding: 15px;
+  border-radius: 24px;
+  box-shadow:
+    rgb(200, 208, 231) 3.2px 3.2px 8px 0px inset,
+    rgb(200, 208, 231) -3.2px -3.2px 8px 0px inset;
+}
+
+.controlsWrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.bottomControlsWrapper {
+  @extend .controlsWrapper;
+  justify-content: flex-end;
+}
+
+.itemCard {
+  width: 312px;
+  height: max-content;
+  margin: 20px 0;
+  padding: 24px;
+
+  border-radius: 24px;
+
+  background: $accent-color;
+
+  position: relative;
+
+  @include desktop {
+    width: 351px;
+  }
+
+  @include desktopLarge {
+    width: 394px;
+  }
+}
+
+.destroyBtn {
+  height: 35px;
+  max-width: 100px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $error-color;
+  border: none;
+  border-radius: 12px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: $black-text-color;
+
+  cursor: pointer;
+
+  & img {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background-color: $accent-hover-color;
+  }
+}
+
+.addToCartBtn {
+  @extend .destroyBtn;
+  background: $accept-color;
+}
+
+.styledInput {
+  max-width: 70px;
+  padding: 0px 6px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+
+  color: $black-text-color;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.375;
+
+  &::placeholder {
+    opacity: 1;
+  }
+}
+
+.rowDirection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.columnDirection {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.itemName {
+  word-wrap: break-word;
+}
+
+.itemDescription {
+  font-size: 18px;
+  word-wrap: break-word;
+}
+
+.bigBoldText {
+  width: 50%;
+  display: inline-block;
+  font-size: 30px;
+  word-wrap: break-word;
+  font-weight: 700;
+}

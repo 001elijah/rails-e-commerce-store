@@ -1,0 +1,194 @@
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/vars";
+
+.modal {
+  padding: 24px;
+
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: max-content;
+  background-color: #fff;
+  border-radius: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  @include tablet {
+    width: 565px;
+    height: 505px;
+    padding: 64px;
+  }
+}
+
+.modalEnterActive {
+  animation: moveUp 0.7s ease-out forwards;
+}
+
+.modalExitActive {
+  animation: moveDown 0.7s ease-out forwards;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+}
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  background: none;
+  border: none;
+  border-radius: 12px;
+
+  &:hover {
+    background-color: $accent-color;
+  }
+
+  cursor: pointer;
+}
+
+.title {
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+.caption {
+  margin-top: 20px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.375;
+  color: $dark-grey-text-color;
+}
+
+.error {
+  position: absolute;
+  bottom: 4px;
+  left: 16px;
+
+  font-size: 12px;
+  color: red;
+}
+
+.emailInputWrapper {
+  width: 100%;
+  position: relative;
+}
+
+.emailInput {
+  width: 100%;
+  height: 54px;
+  margin-top: 40px;
+  padding: 16px 18px 16px 18px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+
+  color: $black-text-color;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.375;
+
+  &::placeholder {
+    opacity: 1;
+  }
+}
+
+.passwordInputWrapper {
+  width: 100%;
+  position: relative;
+}
+
+.passwordInput {
+  width: 100%;
+  height: 54px;
+  margin-top: 20px;
+  padding: 16px 54px 16px 18px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+
+  color: $black-text-color;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.375;
+
+  &::placeholder {
+    opacity: 1;
+  }
+}
+
+.passwordShownButton {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 22px;
+  right: 2px;
+
+  background: none;
+  border: none;
+  border-radius: 12px;
+
+  &:hover {
+    background-color: $accent-color;
+  }
+
+  cursor: pointer;
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 40px;
+  padding: 16px 0px;
+
+  border: 0px;
+  border-radius: 12px;
+  background: $accent-color;
+
+  color: $black-text-color;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.55556;
+
+  &:hover {
+    background-color: $accent-hover-color;
+  }
+
+  cursor: pointer;
+}

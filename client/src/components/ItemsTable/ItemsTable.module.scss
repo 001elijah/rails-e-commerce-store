@@ -1,0 +1,50 @@
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/vars";
+
+.styledInput {
+  max-width: 100px;
+  padding: 0px 18px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+
+  color: $black-text-color;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.375;
+
+  &::placeholder {
+    opacity: 1;
+  }
+}
+
+.destroyBtn {
+  height: 35px;
+  max-width: 100px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $error-color;
+  border: none;
+  border-radius: 12px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: $black-text-color;
+
+  cursor: pointer;
+
+  & img {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background-color: $accent-hover-color;
+  }
+}
+
+.saveBtn {
+  @extend .destroyBtn;
+  background: $accept-color;
+}

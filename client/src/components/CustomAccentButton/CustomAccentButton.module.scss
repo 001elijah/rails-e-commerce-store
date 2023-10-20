@@ -1,0 +1,27 @@
+@import "../../assets/styles/vars";
+
+.button {
+  height: 35px;
+  max-width: 100px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $accent-color;
+  border: none;
+  border-radius: 12px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: $black-text-color;
+
+  cursor: pointer;
+
+  & img {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background-color: $accent-hover-color;
+  }
+}

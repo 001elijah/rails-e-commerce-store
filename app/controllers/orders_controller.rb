@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
   def index
     @render_cart = false
     @orders = Order.all
-    @current_user_orders = current_user.orders
   end
 
   # GET /orders/1 or /orders/1.json

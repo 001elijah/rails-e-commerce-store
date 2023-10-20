@@ -1,0 +1,76 @@
+@import "./assets/styles/reset";
+@import "./assets/styles/vars";
+@import "./assets/styles/mixins";
+
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 500;
+  color: $black-text-color;
+
+  & .no-scroll {
+    overflow: hidden;
+  }
+}
+
+.headerContainer {
+  width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+
+  @include mobile {
+    width: 375px;
+  }
+
+  @include tablet {
+    width: 768px;
+    padding: 0 32px;
+  }
+
+  @include desktop {
+    min-width: 1280px;
+    max-width: 1440px;
+    padding: 0 48px;
+  }
+}
+
+.sectionContainer {
+  width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+
+  @include mobile {
+    width: 375px;
+  }
+
+  @include tablet {
+    width: 768px;
+    padding: 0 32px;
+  }
+
+  @include desktop {
+    min-width: 1280px;
+    max-width: 1440px;
+    padding: 0 48px;
+  }
+
+  @include desktopLarge {
+    min-width: 1312px;
+    max-width: 1440px;
+    padding: 0 0px;
+  }
+}
+
+//----------------extra---------------//
+
+.aboutText {
+  color: $black-text-color;
+
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+}

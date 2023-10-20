@@ -1,0 +1,46 @@
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/vars";
+
+.itemsWrapper {
+  margin-top: 20px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.controlsWrapper {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.title {
+}
+
+.addNewBtn {
+  height: 35px;
+  max-width: 100px;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $accept-color;
+  border: none;
+  border-radius: 12px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: $black-text-color;
+
+  cursor: pointer;
+
+  & img {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background-color: $accent-hover-color;
+  }
+}

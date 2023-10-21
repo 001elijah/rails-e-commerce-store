@@ -1,7 +1,10 @@
 class RegistrationsController < ApplicationController
     def create
         user = ReactUser.create!(
+            role: params["user"]["role"],
             email: params["user"]["email"],
+            first_name: params["user"]["first_name"],
+            last_name: params["user"]["last_name"],
             password: params["user"]["password"],
             password_confirmation: params["user"]["password_confirmation"],
         )

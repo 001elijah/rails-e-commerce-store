@@ -11,6 +11,19 @@ import s from "./RegistrationModal.module.scss";
 import { registerUserApi } from "../../services/backendAPI";
 
 const RegistrationSchema = Yup.object().shape({
+  role: Yup.string().required(),
+  first_name: Yup.string()
+    .required("Required")
+    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
+      message: "Name may contain only letters, apostrophe, dash and spaces.",
+      excludeEmptyString: true,
+    }),
+  last_name: Yup.string()
+    .required("Required")
+    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
+      message: "Name may contain only letters, apostrophe, dash and spaces.",
+      excludeEmptyString: true,
+    }),
   email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string()
     .min(6, "Must contain 6 characters or more")
@@ -26,6 +39,9 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
   const nodeRef = useRef(null);
   const formik = useFormik({
     initialValues: {
+      role: "admin",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
       password_confirmation: "",
@@ -33,10 +49,8 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
     onSubmit: async (values, actions) => {
       const userData = { user: values };
       const response = await registerUserApi(userData);
-      console.log('onSubmit', response);
-      //   await registerAPI(values);
-      //   await createUserInstanceInDB(values);
-      actions.resetForm({ values: { email: "", password: "", password_confirmation: "" } });
+      console.log('onSubmit', response)
+      actions.resetForm({ values: { role: "admin", first_name: "", last_name: "", email: "", password: "", password_confirmation: "" } });
       setIsModalOpen(false);
     },
     validationSchema: RegistrationSchema,
@@ -69,6 +83,51 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
         >
           <img src={X} alt="close" />
         </button>
+        <label className={s.nameInputWrapper}>
+          <input
+            className={s.nameInput}
+            id="role"
+            name="role"
+            type="text"
+            placeholder="Type 'user' or 'admin'"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.role}
+          />
+          {formik.errors.role && formik.touched.role && (
+            <span className={s.error}>{formik.errors.role}</span>
+          )}
+        </label>
+        <label className={s.nameInputWrapper}>
+          <input
+            className={s.nameInput}
+            id="first_name"
+            name="first_name"
+            type="text"
+            placeholder="First name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.first_name}
+          />
+          {formik.errors.first_name && formik.touched.first_name && (
+            <span className={s.error}>{formik.errors.first_name}</span>
+          )}
+        </label>
+        <label className={s.nameInputWrapper}>
+          <input
+            className={s.nameInput}
+            id="last_name"
+            name="last_name"
+            type="text"
+            placeholder="Last name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.last_name}
+          />
+          {formik.errors.last_name && formik.touched.last_name && (
+            <span className={s.error}>{formik.errors.last_name}</span>
+          )}
+        </label>
         <label className={s.emailInputWrapper}>
           <input
             className={s.emailInput}
@@ -112,7 +171,7 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
             id="password_confirmation"
             name="password_confirmation"
             type={passwordConfirmationShown ? "text" : "password"}
-            placeholder="Confirm password"
+            placeholder="Password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password_confirmation}

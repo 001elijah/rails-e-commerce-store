@@ -13,7 +13,7 @@ import { getAllItemsApi, getAllOrdersApi } from "./services/backendAPI";
 import AllUsersPage from "./pages/AllUsersPage";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [items, setItems] = useState([]);
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState([]);

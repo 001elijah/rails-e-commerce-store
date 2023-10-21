@@ -13,7 +13,7 @@ import { getAllItemsApi, getAllOrdersApi } from "./services/backendAPI";
 import AllUsersPage from "./pages/AllUsersPage";
 
 function App() {
-  // const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [items, setItems] = useState([]);
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState([]);
@@ -49,7 +49,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<SharedLayout isLoggedIn={true} />}>
+      <Route path="/" element={<SharedLayout isLoggedIn={isLoggedIn} />}>
         <Route
           index
           element={

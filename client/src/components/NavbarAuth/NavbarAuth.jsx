@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ModalPortal from "../ModalPortal/ModalPortal";
 import LoginModal from "../LoginModal/LoginModal";
 import RegistrationModal from "../RegistrationModal/RegistrationModal";
+import { logoutUserApi } from "../../services/backendAPI";
 const NavbarAuth = ({
   isLoggedIn,
   toggleSidebar,
@@ -32,9 +33,10 @@ const NavbarAuth = ({
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // logoutAPI();
-    console.log("handleLogout");
+    const response = await logoutUserApi();
+    console.log("handleLogout", response);
     // localStorage.setItem("favoriteTeachers", JSON.stringify([]));
     navigate("/");
   };

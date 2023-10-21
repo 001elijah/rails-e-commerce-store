@@ -8,34 +8,35 @@ import Eye from "../../assets/icons/eye-off.svg";
 import EyeOn from "../../assets/icons/eye-on.svg";
 // import { createUserInstanceInDB, registerAPI } from "../../services/firebaseAPI";
 import s from "./RegistrationModal.module.scss";
+import { registerUserApi } from "../../services/backendAPI";
 
 const RegistrationSchema = Yup.object().shape({
-  name: Yup.string()
-    .required("Required")
-    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
-      message: "Name may contain only letters, apostrophe, dash and spaces.",
-      excludeEmptyString: true,
-    }),
   email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string()
+    .min(6, "Must contain 6 characters or more")
+    .required("Required"),
+  password_confirmation: Yup.string()
     .min(6, "Must contain 6 characters or more")
     .required("Required"),
 });
 
 const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordConfirmationShown, setPasswordConfirmationShown] = useState(false);
   const nodeRef = useRef(null);
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
+      password_confirmation: "",
     },
     onSubmit: async (values, actions) => {
-      console.log("onSubmit", values);
+      const userData = { user: values };
+      const response = await registerUserApi(userData);
+      console.log('onSubmit', response);
       //   await registerAPI(values);
       //   await createUserInstanceInDB(values);
-      actions.resetForm({ values: { name: "", email: "", password: "" } });
+      actions.resetForm({ values: { email: "", password: "", password_confirmation: "" } });
       setIsModalOpen(false);
     },
     validationSchema: RegistrationSchema,
@@ -43,6 +44,10 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
+  };
+
+  const togglePasswordConfirmation = () => {
+    setPasswordConfirmationShown(!passwordConfirmationShown);
   };
   return (
     <CSSTransition
@@ -64,27 +69,6 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
         >
           <img src={X} alt="close" />
         </button>
-        <h2 className={s.title}>Registration</h2>
-        <p className={s.caption}>
-          Thank you for your interest in our platform! In order to register, we
-          need some information. Please provide us with the following
-          information
-        </p>
-        <label className={s.nameInputWrapper}>
-          <input
-            className={s.nameInput}
-            id="name"
-            name="name"
-            type="name"
-            placeholder="Name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-          />
-          {formik.errors.name && formik.touched.name && (
-            <span className={s.error}>{formik.errors.name}</span>
-          )}
-        </label>
         <label className={s.emailInputWrapper}>
           <input
             className={s.emailInput}
@@ -120,6 +104,28 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
           </button>
           {formik.errors.password && formik.touched.password && (
             <span className={s.error}>{formik.errors.password}</span>
+          )}
+        </label>
+        <label className={s.passwordInputWrapper}>
+          <input
+            className={s.passwordInput}
+            id="password_confirmation"
+            name="password_confirmation"
+            type={passwordConfirmationShown ? "text" : "password"}
+            placeholder="Confirm password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password_confirmation}
+          />
+          <button
+            className={s.passwordShownButton}
+            type="button"
+            onClick={togglePasswordConfirmation}
+          >
+            <img src={passwordConfirmationShown ? Eye : EyeOn} alt="toggle show password" />
+          </button>
+          {formik.errors.password_confirmation && formik.touched.password_confirmation && (
+            <span className={s.error}>{formik.errors.password_confirmation}</span>
           )}
         </label>
         <button className={s.submitButton} type="submit">

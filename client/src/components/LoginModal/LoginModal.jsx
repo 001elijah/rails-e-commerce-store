@@ -8,6 +8,7 @@ import Eye from "../../assets/icons/eye-off.svg";
 import EyeOn from "../../assets/icons/eye-on.svg";
 // import { loginAPI } from "../../services/firebaseAPI";
 import s from "./LoginModal.module.scss";
+import { loginUserApi } from "../../services/backendAPI";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -24,9 +25,10 @@ const LoginModal = ({ isModalOpen, setIsModalOpen }) => {
       email: "",
       password: "",
     },
-    onSubmit: (values, actions) => {
-      //   loginAPI(values);
-      console.log("onSubmit", values);
+    onSubmit: async (values, actions) => {
+      const userData = { user: values };
+      const response = await loginUserApi(userData);
+      console.log("onLogin", response);
       actions.resetForm({ values: { email: "", password: "" } });
       setIsModalOpen(false);
     },

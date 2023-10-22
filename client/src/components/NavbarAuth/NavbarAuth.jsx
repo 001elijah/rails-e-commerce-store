@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 import ModalPortal from "../ModalPortal/ModalPortal";
 import LoginModal from "../LoginModal/LoginModal";
 import RegistrationModal from "../RegistrationModal/RegistrationModal";
+import { logoutUserApi } from "../../services/backendAPI";
 const NavbarAuth = ({
   isLoggedIn,
+  setIsLoggedIn,
+  setCurrentUser,
   toggleSidebar,
   navbarAuth,
   navbarLogin,
   navbarLogout,
   navbarRegister,
+  throwSuccessPopup,
+  throwErrorPopup,
 }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,11 +37,18 @@ const NavbarAuth = ({
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleLogout = () => {
-    // logoutAPI();
-    console.log("handleLogout");
-    // localStorage.setItem("favoriteTeachers", JSON.stringify([]));
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      const response = await logoutUserApi();
+      setIsLoggedIn(false);
+      setCurrentUser(null);
+      console.log("handleLogout", response);
+      throwSuccessPopup("Logged out successfully!");
+      // localStorage.setItem("favoriteTeachers", JSON.stringify([]));
+      navigate("/");
+    } catch (error) {
+      throwErrorPopup(error.message);
+    }
   };
   return (
     <>
@@ -66,12 +78,20 @@ const NavbarAuth = ({
               <LoginModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
+                setCurrentUser={setCurrentUser}
+                setIsLoggedIn={setIsLoggedIn}
+                throwSuccessPopup={throwSuccessPopup}
+                throwErrorPopup={throwErrorPopup}
               />
             )}
             {isRegistrationModal && (
               <RegistrationModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
+                setCurrentUser={setCurrentUser}
+                setIsLoggedIn={setIsLoggedIn}
+                throwSuccessPopup={throwSuccessPopup}
+                throwErrorPopup={throwErrorPopup}
               />
             )}
           </ModalPortal>
@@ -83,11 +103,15 @@ const NavbarAuth = ({
 
 NavbarAuth.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
   toggleSidebar: PropTypes.func,
   navbarAuth: PropTypes.string.isRequired,
   navbarLogin: PropTypes.string.isRequired,
   navbarLogout: PropTypes.string.isRequired,
   navbarRegister: PropTypes.string.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default NavbarAuth;

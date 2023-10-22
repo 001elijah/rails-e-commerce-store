@@ -11,7 +11,12 @@ import { useState } from "react";
 import { destroyItemApi, editItemApi } from "../../services/backendAPI";
 import s from "./ItemsTable.module.scss";
 
-const ItemRow = ({ row, onManageItems }) => {
+const ItemRow = ({
+  row,
+  onManageItems,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const { id, name, description, price, created_at, updated_at } = row;
   const [itemName, setItemName] = useState(name);
   const [itemDescription, setItemDescription] = useState(description);
@@ -23,30 +28,40 @@ const ItemRow = ({ row, onManageItems }) => {
   };
 
   const handleSaveItem = async (id) => {
-    const item = await editItemApi({
-      id,
-      name: itemName,
-      description: itemDescription,
-      price: itemPrice,
-    });
-    setEditable(false);
-    onManageItems((prevItems) => {
-      const nextItems = prevItems.map((prevItem) => {
-        if (prevItem.id === item.id) {
-          return { ...prevItem, ...item };
-        } else {
-          return prevItem;
-        }
+    try {
+      const item = await editItemApi({
+        id,
+        name: itemName,
+        description: itemDescription,
+        price: itemPrice,
       });
-      return nextItems;
-    });
+      setEditable(false);
+      onManageItems((prevItems) => {
+        const nextItems = prevItems.map((prevItem) => {
+          if (prevItem.id === item.id) {
+            return { ...prevItem, ...item };
+          } else {
+            return prevItem;
+          }
+        });
+        return nextItems;
+      });
+      throwSuccessPopup("Edit item success!");
+    } catch (error) {
+      throwErrorPopup(error.message);
+    }
   };
 
   const handleDestroyItem = async (id) => {
-    await destroyItemApi(id);
-    onManageItems((prevItems) =>
-      prevItems.filter((prevItem) => prevItem.id !== id),
-    );
+    try {
+      await destroyItemApi(id);
+      onManageItems((prevItems) =>
+        prevItems.filter((prevItem) => prevItem.id !== id),
+      );
+      throwSuccessPopup("Destroy item success!");
+    } catch (error) {
+      throwErrorPopup(error.message);
+    }
   };
   return (
     <TableRow
@@ -137,7 +152,12 @@ const ItemRow = ({ row, onManageItems }) => {
   );
 };
 
-export default function ItemsTable({ onManageItems, rows }) {
+export default function ItemsTable({
+  onManageItems,
+  rows,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) {
   return (
     <>
       <TableContainer component={Paper}>
@@ -156,7 +176,13 @@ export default function ItemsTable({ onManageItems, rows }) {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <ItemRow key={row.id} row={row} onManageItems={onManageItems} />
+              <ItemRow
+                key={row.id}
+                row={row}
+                onManageItems={onManageItems}
+                throwSuccessPopup={throwSuccessPopup}
+                throwErrorPopup={throwErrorPopup}
+              />
             ))}
           </TableBody>
         </Table>
@@ -167,6 +193,8 @@ export default function ItemsTable({ onManageItems, rows }) {
 
 ItemRow.propTypes = {
   onManageItems: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
   row: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -180,4 +208,6 @@ ItemRow.propTypes = {
 ItemsTable.propTypes = {
   onManageItems: PropTypes.func.isRequired,
   rows: PropTypes.array.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };

@@ -28,7 +28,7 @@ const ItemRow = ({ rows, row, handleRemoveFromCart, setSum }) => {
 
   useEffect(() => {
     setSum(rows.reduce((a, b) => +a + +b.price * +b.quantity, 0));
-  }, [rows, setSum, handleSave])
+  }, [rows, setSum, handleSave]);
 
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -68,20 +68,38 @@ const ItemRow = ({ rows, row, handleRemoveFromCart, setSum }) => {
       </TableCell>
       <TableCell align="right">Manage</TableCell>
       <TableCell align="right">${+row.price * row.quantity}</TableCell>
-      <TableCell align="right"><CustomAccentButton type="button" title="X" style={s.destroyBtn} onClick={() => handleRemoveFromCart(row.id)} /></TableCell>
+      <TableCell align="right">
+        <CustomAccentButton
+          type="button"
+          title="X"
+          style={s.destroyBtn}
+          onClick={() => handleRemoveFromCart(row.id)}
+        />
+      </TableCell>
     </TableRow>
   );
 };
 
-export default function CartTable({ rows, handleRemoveFromCart, resetCart }) {
+export default function CartTable({
+  rows,
+  handleRemoveFromCart,
+  resetCart,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) {
   const [sum, setSum] = useState(0);
   const navigate = useNavigate();
 
   const handleBuy = async () => {
-    await addOrderApi({user_id: 1, amount: sum })
-    resetCart();
-    navigate("/");
-  }
+    try {
+      await addOrderApi({ user_id: 1, amount: sum });
+      navigate("/");
+      throwSuccessPopup("Your order has been payed, thanks!");
+      resetCart();
+    } catch (error) {
+      throwErrorPopup(error.message);
+    }
+  };
 
   return (
     <>
@@ -100,12 +118,26 @@ export default function CartTable({ rows, handleRemoveFromCart, resetCart }) {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <ItemRow key={row.id} rows={rows} row={row} handleRemoveFromCart={handleRemoveFromCart} setSum={setSum} />
+              <ItemRow
+                key={row.id}
+                rows={rows}
+                row={row}
+                handleRemoveFromCart={handleRemoveFromCart}
+                setSum={setSum}
+              />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className={s.totalPrice}><p>Total price: ${sum}</p><CustomAccentButton type="button" title="Buy" style={s.buyBtn} onClick={handleBuy} /></div>
+      <div className={s.totalPrice}>
+        <p>Total price: ${sum}</p>
+        <CustomAccentButton
+          type="button"
+          title="Buy"
+          style={s.buyBtn}
+          onClick={handleBuy}
+        />
+      </div>
     </>
   );
 }
@@ -120,11 +152,13 @@ ItemRow.propTypes = {
     quantity: PropTypes.number.isRequired,
   }),
   handleRemoveFromCart: PropTypes.func.isRequired,
-  setSum: PropTypes.func.isRequired
+  setSum: PropTypes.func.isRequired,
 };
 
 CartTable.propTypes = {
   rows: PropTypes.array.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
-  resetCart: PropTypes.func.isRequired
+  resetCart: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };

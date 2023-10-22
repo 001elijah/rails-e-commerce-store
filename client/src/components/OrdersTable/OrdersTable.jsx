@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import s from "./OrdersTable.module.scss"
+import s from "./OrdersTable.module.scss";
 
 export default function OrdersTable({ rows }) {
   return (
@@ -30,7 +30,9 @@ export default function OrdersTable({ rows }) {
                   {row.user_id}
                 </TableCell>
                 <TableCell align="right">${row.amount}</TableCell>
-                <TableCell align="right">{new Date(row.created_at).toLocaleDateString("en-US")}</TableCell>
+                <TableCell align="right">
+                  {new Date(row.created_at).toLocaleDateString("en-US")}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

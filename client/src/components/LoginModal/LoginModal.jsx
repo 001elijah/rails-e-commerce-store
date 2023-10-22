@@ -8,6 +8,7 @@ import Eye from "../../assets/icons/eye-off.svg";
 import EyeOn from "../../assets/icons/eye-on.svg";
 // import { loginAPI } from "../../services/firebaseAPI";
 import s from "./LoginModal.module.scss";
+import { loginUserApi } from "../../services/backendAPI";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -16,7 +17,14 @@ const LoginSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const LoginModal = ({ isModalOpen, setIsModalOpen }) => {
+const LoginModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  setCurrentUser,
+  setIsLoggedIn,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const [passwordShown, setPasswordShown] = useState(false);
   const nodeRef = useRef(null);
   const formik = useFormik({
@@ -24,11 +32,22 @@ const LoginModal = ({ isModalOpen, setIsModalOpen }) => {
       email: "",
       password: "",
     },
-    onSubmit: (values, actions) => {
-      //   loginAPI(values);
-      console.log("onSubmit", values);
-      actions.resetForm({ values: { email: "", password: "" } });
-      setIsModalOpen(false);
+    onSubmit: async (values, actions) => {
+      try {
+        const userData = { user: values };
+        const response = await loginUserApi(userData);
+        if (response.status === 401) {
+          throw new Error("Login error!");
+        }
+        setIsLoggedIn(true);
+        throwSuccessPopup(`Welcome back, ${response.user.first_name}!`);
+        console.log("onLogin", response);
+        actions.resetForm({ values: { email: "", password: "" } });
+        setCurrentUser(response.user);
+        setIsModalOpen(false);
+      } catch (error) {
+        throwErrorPopup(error.message);
+      }
     },
     validationSchema: LoginSchema,
   });
@@ -109,6 +128,10 @@ const LoginModal = ({ isModalOpen, setIsModalOpen }) => {
 LoginModal.propTypes = {
   isModalOpen: PropTypes.bool,
   setIsModalOpen: PropTypes.func.isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default LoginModal;

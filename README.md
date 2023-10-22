@@ -16,7 +16,9 @@ This project uses Postgres. To start it on localhost:5432 use [Postgresapp]('htt
 
 There are some commands applied to postgres:
 
-`psql` or `psql -h 127.0.0.1 -U [username] [dbname]` — run postgreSQL
+`psql` or `psql -h 127.0.0.1 -U [username] [dbname]` — run postgreSQL.
+
+Ex: `psql -h 127.0.0.1 -U mysite mysite_development`
 
 `\l` or `\l+` — list of databases
 

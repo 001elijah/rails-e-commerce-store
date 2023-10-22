@@ -10,7 +10,7 @@ const OrdersPage = ({ orders }) => {
 };
 
 OrdersPage.propTypes = {
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
 };
 
 export default OrdersPage;

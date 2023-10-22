@@ -7,7 +7,14 @@ import { useState } from "react";
 import ModalPortal from "../ModalPortal/ModalPortal";
 import AddNewItemModal from "../AddNewItemModal/AddNewItemModal";
 
-const ItemsList = ({ onManageItems, items, cart, setCart }) => {
+const ItemsList = ({
+  onManageItems,
+  items,
+  cart,
+  setCart,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const [enableTableView, setEnableTableView] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -35,7 +42,12 @@ const ItemsList = ({ onManageItems, items, cart, setCart }) => {
         />
       </div>
       {enableTableView ? (
-        <ItemsTable onManageItems={onManageItems} rows={items} />
+        <ItemsTable
+          onManageItems={onManageItems}
+          rows={items}
+          throwSuccessPopup={throwSuccessPopup}
+          throwErrorPopup={throwErrorPopup}
+        />
       ) : (
         <ul className={s.itemsWrapper}>
           {items.map((item) => {
@@ -49,6 +61,8 @@ const ItemsList = ({ onManageItems, items, cart, setCart }) => {
                   price={item.price}
                   cart={cart}
                   setCart={setCart}
+                  throwSuccessPopup={throwSuccessPopup}
+                  throwErrorPopup={throwErrorPopup}
                 />
               </li>
             );
@@ -60,6 +74,8 @@ const ItemsList = ({ onManageItems, items, cart, setCart }) => {
           onManageItems={onManageItems}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          throwSuccessPopup={throwSuccessPopup}
+          throwErrorPopup={throwErrorPopup}
         />
       </ModalPortal>
     </>
@@ -71,6 +87,8 @@ ItemsList.propTypes = {
   setCart: PropTypes.func.isRequired,
   onManageItems: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default ItemsList;

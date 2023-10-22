@@ -8,9 +8,17 @@ import Eye from "../../assets/icons/eye-off.svg";
 import EyeOn from "../../assets/icons/eye-on.svg";
 // import { createUserInstanceInDB, registerAPI } from "../../services/firebaseAPI";
 import s from "./RegistrationModal.module.scss";
+import { registerUserApi } from "../../services/backendAPI";
 
 const RegistrationSchema = Yup.object().shape({
-  name: Yup.string()
+  role: Yup.string().required(),
+  first_name: Yup.string()
+    .required("Required")
+    .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
+      message: "Name may contain only letters, apostrophe, dash and spaces.",
+      excludeEmptyString: true,
+    }),
+  last_name: Yup.string()
     .required("Required")
     .matches(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/, {
       message: "Name may contain only letters, apostrophe, dash and spaces.",
@@ -20,29 +28,70 @@ const RegistrationSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, "Must contain 6 characters or more")
     .required("Required"),
+  password_confirmation: Yup.string()
+    .min(6, "Must contain 6 characters or more")
+    .required("Required"),
 });
 
-const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
+const RegistrationModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  setCurrentUser,
+  setIsLoggedIn,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordConfirmationShown, setPasswordConfirmationShown] =
+    useState(false);
   const nodeRef = useRef(null);
   const formik = useFormik({
     initialValues: {
-      name: "",
+      role: "admin",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
+      password_confirmation: "",
     },
     onSubmit: async (values, actions) => {
-      console.log("onSubmit", values);
-      //   await registerAPI(values);
-      //   await createUserInstanceInDB(values);
-      actions.resetForm({ values: { name: "", email: "", password: "" } });
-      setIsModalOpen(false);
+      try {
+        if (values.password !== values.password_confirmation) {
+          throw new Error("Confirm your password!");
+        }
+        const userData = { user: values };
+        const response = await registerUserApi(userData);
+        if (response.status === 500) {
+          throw new Error("Server error!");
+        }
+        setIsLoggedIn(true);
+        console.log("onSubmit", response);
+        throwSuccessPopup(`Welcome to the shop, ${response.user.first_name}!`);
+        actions.resetForm({
+          values: {
+            role: "admin",
+            first_name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            password_confirmation: "",
+          },
+        });
+        setCurrentUser(response.user);
+        setIsModalOpen(false);
+      } catch (error) {
+        throwErrorPopup(error.message);
+      }
     },
     validationSchema: RegistrationSchema,
   });
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
+  };
+
+  const togglePasswordConfirmation = () => {
+    setPasswordConfirmationShown(!passwordConfirmationShown);
   };
   return (
     <CSSTransition
@@ -64,25 +113,49 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
         >
           <img src={X} alt="close" />
         </button>
-        <h2 className={s.title}>Registration</h2>
-        <p className={s.caption}>
-          Thank you for your interest in our platform! In order to register, we
-          need some information. Please provide us with the following
-          information
-        </p>
         <label className={s.nameInputWrapper}>
           <input
             className={s.nameInput}
-            id="name"
-            name="name"
-            type="name"
-            placeholder="Name"
+            id="role"
+            name="role"
+            type="text"
+            placeholder="Type 'user' or 'admin'"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.name}
+            value={formik.values.role}
           />
-          {formik.errors.name && formik.touched.name && (
-            <span className={s.error}>{formik.errors.name}</span>
+          {formik.errors.role && formik.touched.role && (
+            <span className={s.error}>{formik.errors.role}</span>
+          )}
+        </label>
+        <label className={s.nameInputWrapper}>
+          <input
+            className={s.nameInput}
+            id="first_name"
+            name="first_name"
+            type="text"
+            placeholder="First name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.first_name}
+          />
+          {formik.errors.first_name && formik.touched.first_name && (
+            <span className={s.error}>{formik.errors.first_name}</span>
+          )}
+        </label>
+        <label className={s.nameInputWrapper}>
+          <input
+            className={s.nameInput}
+            id="last_name"
+            name="last_name"
+            type="text"
+            placeholder="Last name"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.last_name}
+          />
+          {formik.errors.last_name && formik.touched.last_name && (
+            <span className={s.error}>{formik.errors.last_name}</span>
           )}
         </label>
         <label className={s.emailInputWrapper}>
@@ -122,6 +195,34 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
             <span className={s.error}>{formik.errors.password}</span>
           )}
         </label>
+        <label className={s.passwordInputWrapper}>
+          <input
+            className={s.passwordInput}
+            id="password_confirmation"
+            name="password_confirmation"
+            type={passwordConfirmationShown ? "text" : "password"}
+            placeholder="Password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.password_confirmation}
+          />
+          <button
+            className={s.passwordShownButton}
+            type="button"
+            onClick={togglePasswordConfirmation}
+          >
+            <img
+              src={passwordConfirmationShown ? Eye : EyeOn}
+              alt="toggle show password"
+            />
+          </button>
+          {formik.errors.password_confirmation &&
+            formik.touched.password_confirmation && (
+              <span className={s.error}>
+                {formik.errors.password_confirmation}
+              </span>
+            )}
+        </label>
         <button className={s.submitButton} type="submit">
           Sign Up
         </button>
@@ -133,6 +234,10 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
 RegistrationModal.propTypes = {
   isModalOpen: PropTypes.bool,
   setIsModalOpen: PropTypes.func.isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default RegistrationModal;

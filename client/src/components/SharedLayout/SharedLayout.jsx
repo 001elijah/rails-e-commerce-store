@@ -3,10 +3,24 @@ import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../Header/Header";
 
-const SharedLayout = ({ isLoggedIn }) => {
+const SharedLayout = ({
+  isLoggedIn,
+  setIsLoggedIn,
+  currentUser,
+  setCurrentUser,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        throwSuccessPopup={throwSuccessPopup}
+        throwErrorPopup={throwErrorPopup}
+      />
       <Outlet />
     </Suspense>
   );
@@ -14,6 +28,11 @@ const SharedLayout = ({ isLoggedIn }) => {
 
 SharedLayout.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
+  setCurrentUser: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default SharedLayout;

@@ -22,6 +22,8 @@ const EditItemModal = ({
   price,
   isModalOpen,
   setIsModalOpen,
+  throwSuccessPopup,
+  throwErrorPopup,
 }) => {
   const nodeRef = useRef(null);
   const formik = useFormik({
@@ -32,18 +34,23 @@ const EditItemModal = ({
       price,
     },
     onSubmit: async (values) => {
-      const item = await editItemApi(values);
-      onManageItems((prevItems) => {
-        const nextItems = prevItems.map((prevItem) => {
-          if (prevItem.id === item.id) {
-            return { ...prevItem, ...item };
-          } else {
-            return prevItem;
-          }
+      try {
+        const item = await editItemApi(values);
+        onManageItems((prevItems) => {
+          const nextItems = prevItems.map((prevItem) => {
+            if (prevItem.id === item.id) {
+              return { ...prevItem, ...item };
+            } else {
+              return prevItem;
+            }
+          });
+          return nextItems;
         });
-        return nextItems;
-      });
-      setIsModalOpen(false);
+        throwSuccessPopup("Edit item success!");
+        setIsModalOpen(false);
+      } catch (error) {
+        throwErrorPopup(error.message);
+      }
     },
     validationSchema: ItemSchema,
   });
@@ -127,6 +134,8 @@ EditItemModal.propTypes = {
   price: PropTypes.string.isRequired,
   isModalOpen: PropTypes.bool,
   setIsModalOpen: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default EditItemModal;

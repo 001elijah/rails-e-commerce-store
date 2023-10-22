@@ -2,10 +2,10 @@
 @import "../../assets/styles/vars";
 
 .qtyWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
 }
 
 .styledInput {
@@ -57,13 +57,13 @@
 }
 
 .buyBtn {
-    @extend .saveBtn;
-    width: 100px;
+  @extend .saveBtn;
+  width: 100px;
 }
 
 .totalPrice {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

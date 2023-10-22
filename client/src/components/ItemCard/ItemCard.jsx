@@ -14,6 +14,8 @@ const ItemCard = ({
   price,
   cart,
   setCart,
+  throwSuccessPopup,
+  throwErrorPopup,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemQuantity, setItemQuantity] = useState(1);
@@ -22,10 +24,15 @@ const ItemCard = ({
     setIsModalOpen(true);
   };
   const handleDestroyItem = async () => {
-    await destroyItemApi(id);
-    onManageItems((prevItems) =>
-      prevItems.filter((prevItem) => prevItem.id !== id),
-    );
+    try {
+      await destroyItemApi(id);
+      onManageItems((prevItems) =>
+        prevItems.filter((prevItem) => prevItem.id !== id),
+      );
+      throwSuccessPopup("Destroy item success!");
+    } catch (error) {
+      throwErrorPopup(error.message);
+    }
   };
 
   const handleAddToCart = () => {
@@ -42,6 +49,7 @@ const ItemCard = ({
       });
       setCart(nextCart);
     }
+    throwSuccessPopup("Item added to cart!");
   };
 
   return (
@@ -95,6 +103,8 @@ const ItemCard = ({
           price={price}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          throwSuccessPopup={throwSuccessPopup}
+          throwErrorPopup={throwErrorPopup}
         />
       </ModalPortal>
     </>
@@ -109,6 +119,8 @@ ItemCard.propTypes = {
   price: PropTypes.string.isRequired,
   cart: PropTypes.array.isRequired,
   setCart: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default ItemCard;

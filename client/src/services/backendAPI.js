@@ -1,76 +1,74 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = "https://taskpro.onrender.com";
-
 axios.defaults.baseURL = "http://localhost:3000";
-
-// const token = {
-//   set(token) {
-//     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-//   },
-//   unset() {
-//     axios.defaults.headers.common.Authorization = "";
-//   },
-// };
 
 // --------------------------------------------AUTH----------------------//
 
 export const registerUserApi = async (userData) => {
-  const { data } = await axios.post("/registrations", userData, { withCredentials: true });
+  const { data } = await axios.post("/registrations", userData, {
+    withCredentials: true,
+  });
   return data;
-}
+};
 
 export const loginUserApi = async (userData) => {
   const { data } = await axios.post("/sessions", userData, {
     withCredentials: true,
   });
   return data;
-}
+};
 
 export const logoutUserApi = async () => {
   const { data } = await axios.delete("/logout", { withCredentials: true });
   return data;
-}
+};
+
+export const checkLoginStatusApi = async () => {
+  const { data } = await axios.get("/logged_in", { withCredentials: true });
+  return data;
+};
 
 // --------------------------------------------ITEMS----------------------//
 
 export const getAllItemsApi = async () => {
-  //   token.set(userToken);
-  const { data } = await axios.get("/items.json");
+  const { data } = await axios.get("/items.json", { withCredentials: true });
   return data;
 };
 
 export const addItemApi = async (itemData) => {
-  //   token.set(userToken);
-  const { data } = await axios.post("/items.json", itemData);
-  return data;
-};
-
-export const editItemApi = async ({ id, name, description, price }) => {
-  //   token.set(userToken);
-  const { data } = await axios.patch(`/items/${id}.json`, {
-    name,
-    description,
-    price,
+  const { data } = await axios.post("/items.json", itemData, {
+    withCredentials: true,
   });
   return data;
 };
 
+export const editItemApi = async ({ id, name, description, price }) => {
+  const { data } = await axios.patch(
+    `/items/${id}.json`,
+    {
+      name,
+      description,
+      price,
+    },
+    { withCredentials: true },
+  );
+  return data;
+};
+
 export const destroyItemApi = async (id) => {
-  //   token.set(userToken);
-  await axios.delete(`/items/${id}.json`);
+  await axios.delete(`/items/${id}.json`, { withCredentials: true });
 };
 
 // --------------------------------------------ORDERS----------------------//
 
 export const addOrderApi = async (orderData) => {
-  //   token.set(userToken);
-  const { data } = await axios.post("/orders.json", orderData);
+  const { data } = await axios.post("/orders.json", orderData, {
+    withCredentials: true,
+  });
   return data;
 };
 
 export const getAllOrdersApi = async () => {
-  //   token.set(userToken);
-  const { data } = await axios.get("/orders.json");
+  const { data } = await axios.get("/orders.json", { withCredentials: true });
   return data;
 };

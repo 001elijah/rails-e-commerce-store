@@ -14,7 +14,13 @@ const ItemSchema = Yup.object().shape({
   price: Yup.string().required("Required"),
 });
 
-const AddNewItemModal = ({ onManageItems, isModalOpen, setIsModalOpen }) => {
+const AddNewItemModal = ({
+  onManageItems,
+  isModalOpen,
+  setIsModalOpen,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const nodeRef = useRef(null);
   const formik = useFormik({
     initialValues: {
@@ -23,11 +29,16 @@ const AddNewItemModal = ({ onManageItems, isModalOpen, setIsModalOpen }) => {
       price: "",
     },
     onSubmit: async (values, actions) => {
-      const item = await addItemApi(values);
-      onManageItems((items) => [...items, item]);
-      console.log("onSubmit", item);
-      actions.resetForm({ values: { name: "", description: "", price: "" } });
-      setIsModalOpen(false);
+      try {
+        const item = await addItemApi(values);
+        onManageItems((items) => [...items, item]);
+        throwSuccessPopup("New item created!");
+        console.log("onSubmit", item);
+        actions.resetForm({ values: { name: "", description: "", price: "" } });
+        setIsModalOpen(false);
+      } catch (error) {
+        throwErrorPopup(error.message);
+      }
     },
     validationSchema: ItemSchema,
   });
@@ -107,6 +118,8 @@ AddNewItemModal.propTypes = {
   onManageItems: PropTypes.func.isRequired,
   isModalOpen: PropTypes.bool,
   setIsModalOpen: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default AddNewItemModal;

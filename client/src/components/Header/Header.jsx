@@ -7,7 +7,14 @@ import PropTypes from "prop-types";
 import NavbarAuth from "../NavbarAuth/NavbarAuth";
 import s from "./Header.module.scss";
 
-const Header = ({ isLoggedIn }) => {
+const Header = ({
+  isLoggedIn,
+  setIsLoggedIn,
+  currentUser,
+  setCurrentUser,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   return (
     <header className={s.header}>
       <div className="headerContainer">
@@ -38,12 +45,19 @@ const Header = ({ isLoggedIn }) => {
               ))}
             </ul>
           </nav>
+          <p>Logged in: {isLoggedIn ? "true" : "false"}</p>
+          <p>User: {currentUser?.email}</p>
+          <p>Role: {currentUser?.role}</p>
           <NavbarAuth
             isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+            setCurrentUser={setCurrentUser}
             navbarAuth={s.navbarAuth}
             navbarLogin={s.navbarLogin}
             navbarLogout={s.navbarLogout}
             navbarRegister={s.navbarRegister}
+            throwSuccessPopup={throwSuccessPopup}
+            throwErrorPopup={throwErrorPopup}
           />
         </div>
       </div>
@@ -53,6 +67,11 @@ const Header = ({ isLoggedIn }) => {
 
 Header.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
+  setCurrentUser: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default Header;

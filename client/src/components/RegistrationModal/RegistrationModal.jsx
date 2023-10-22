@@ -33,9 +33,17 @@ const RegistrationSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
+const RegistrationModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  setCurrentUser,
+  setIsLoggedIn,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [passwordConfirmationShown, setPasswordConfirmationShown] = useState(false);
+  const [passwordConfirmationShown, setPasswordConfirmationShown] =
+    useState(false);
   const nodeRef = useRef(null);
   const formik = useFormik({
     initialValues: {
@@ -47,11 +55,33 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
       password_confirmation: "",
     },
     onSubmit: async (values, actions) => {
-      const userData = { user: values };
-      const response = await registerUserApi(userData);
-      console.log('onSubmit', response)
-      actions.resetForm({ values: { role: "admin", first_name: "", last_name: "", email: "", password: "", password_confirmation: "" } });
-      setIsModalOpen(false);
+      try {
+        if (values.password !== values.password_confirmation) {
+          throw new Error("Confirm your password!");
+        }
+        const userData = { user: values };
+        const response = await registerUserApi(userData);
+        if (response.status === 500) {
+          throw new Error("Server error!");
+        }
+        setIsLoggedIn(true);
+        console.log("onSubmit", response);
+        throwSuccessPopup(`Welcome to the shop, ${response.user.first_name}!`);
+        actions.resetForm({
+          values: {
+            role: "admin",
+            first_name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            password_confirmation: "",
+          },
+        });
+        setCurrentUser(response.user);
+        setIsModalOpen(false);
+      } catch (error) {
+        throwErrorPopup(error.message);
+      }
     },
     validationSchema: RegistrationSchema,
   });
@@ -181,11 +211,17 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
             type="button"
             onClick={togglePasswordConfirmation}
           >
-            <img src={passwordConfirmationShown ? Eye : EyeOn} alt="toggle show password" />
+            <img
+              src={passwordConfirmationShown ? Eye : EyeOn}
+              alt="toggle show password"
+            />
           </button>
-          {formik.errors.password_confirmation && formik.touched.password_confirmation && (
-            <span className={s.error}>{formik.errors.password_confirmation}</span>
-          )}
+          {formik.errors.password_confirmation &&
+            formik.touched.password_confirmation && (
+              <span className={s.error}>
+                {formik.errors.password_confirmation}
+              </span>
+            )}
         </label>
         <button className={s.submitButton} type="submit">
           Sign Up
@@ -198,6 +234,10 @@ const RegistrationModal = ({ isModalOpen, setIsModalOpen }) => {
 RegistrationModal.propTypes = {
   isModalOpen: PropTypes.bool,
   setIsModalOpen: PropTypes.func.isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default RegistrationModal;

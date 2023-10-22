@@ -17,7 +17,14 @@ const LoginSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const LoginModal = ({ isModalOpen, setIsModalOpen }) => {
+const LoginModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  setCurrentUser,
+  setIsLoggedIn,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const [passwordShown, setPasswordShown] = useState(false);
   const nodeRef = useRef(null);
   const formik = useFormik({
@@ -26,11 +33,21 @@ const LoginModal = ({ isModalOpen, setIsModalOpen }) => {
       password: "",
     },
     onSubmit: async (values, actions) => {
-      const userData = { user: values };
-      const response = await loginUserApi(userData);
-      console.log("onLogin", response);
-      actions.resetForm({ values: { email: "", password: "" } });
-      setIsModalOpen(false);
+      try {
+        const userData = { user: values };
+        const response = await loginUserApi(userData);
+        if (response.status === 401) {
+          throw new Error("Login error!");
+        }
+        setIsLoggedIn(true);
+        throwSuccessPopup(`Welcome back, ${response.user.first_name}!`);
+        console.log("onLogin", response);
+        actions.resetForm({ values: { email: "", password: "" } });
+        setCurrentUser(response.user);
+        setIsModalOpen(false);
+      } catch (error) {
+        throwErrorPopup(error.message);
+      }
     },
     validationSchema: LoginSchema,
   });
@@ -111,6 +128,10 @@ const LoginModal = ({ isModalOpen, setIsModalOpen }) => {
 LoginModal.propTypes = {
   isModalOpen: PropTypes.bool,
   setIsModalOpen: PropTypes.func.isRequired,
+  setCurrentUser: PropTypes.func.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default LoginModal;

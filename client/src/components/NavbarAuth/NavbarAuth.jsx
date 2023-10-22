@@ -10,6 +10,7 @@ const NavbarAuth = ({
   setIsLoggedIn,
   setCurrentUser,
   setOrders,
+  setUsers,
   toggleSidebar,
   navbarAuth,
   navbarLogin,
@@ -44,6 +45,7 @@ const NavbarAuth = ({
       setIsLoggedIn(false);
       setCurrentUser(null);
       setOrders([]);
+      setUsers([]);
       throwSuccessPopup("Logged out successfully!");
       navigate("/");
     } catch (error) {
@@ -106,6 +108,7 @@ NavbarAuth.propTypes = {
   setIsLoggedIn: PropTypes.func.isRequired,
   setCurrentUser: PropTypes.func.isRequired,
   setOrders: PropTypes.func.isRequired,
+  setUsers: PropTypes.func.isRequired,
   toggleSidebar: PropTypes.func,
   navbarAuth: PropTypes.string.isRequired,
   navbarLogin: PropTypes.string.isRequired,

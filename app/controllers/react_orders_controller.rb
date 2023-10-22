@@ -4,20 +4,6 @@ class ReactOrdersController < ApplicationController
     def index
         @react_orders = ReactOrder.all
     end
-    
-    # def react_orders
-    #     react_orders = ReactOrder.all
-
-    #     if react_orders
-    #         response json: {
-    #             orders: react_orders
-    #         }
-    #     else
-    #         response json: {
-    #             status: 404
-    #         }
-    #     end
-    # end
 
     def create
     @react_order = @current_react_user.react_orders.create!(

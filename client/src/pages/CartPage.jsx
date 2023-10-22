@@ -6,6 +6,7 @@ const CartPage = ({
   cart,
   handleRemoveFromCart,
   resetCart,
+  setOrders,
   throwSuccessPopup,
   throwErrorPopup,
 }) => {
@@ -18,6 +19,7 @@ const CartPage = ({
             rows={cart}
             handleRemoveFromCart={handleRemoveFromCart}
             resetCart={resetCart}
+            setOrders={setOrders}
             throwSuccessPopup={throwSuccessPopup}
             throwErrorPopup={throwErrorPopup}
           />
@@ -36,6 +38,7 @@ CartPage.propTypes = {
   cart: PropTypes.array.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
+  setOrders: PropTypes.func.isRequired,
   throwSuccessPopup: PropTypes.func.isRequired,
   throwErrorPopup: PropTypes.func.isRequired,
 };

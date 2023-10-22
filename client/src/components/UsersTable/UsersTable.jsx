@@ -35,8 +35,8 @@ export default function UsersTable({ rows }) {
               </TableCell>
               <TableCell align="right">{row.email}</TableCell>
               <TableCell align="right">{row.role}</TableCell>
-              <TableCell align="right">{row.created_at}</TableCell>
-              <TableCell align="right">{row.updated_at}</TableCell>
+              <TableCell align="right">{new Date(row.created_at).toLocaleDateString("en-US")}</TableCell>
+              <TableCell align="right">{new Date(row.updated_at).toLocaleDateString("en-US")}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -13,6 +13,7 @@ const Header = ({
   currentUser,
   setCurrentUser,
   setOrders,
+  setUsers,
   throwSuccessPopup,
   throwErrorPopup,
 }) => {
@@ -103,6 +104,7 @@ const Header = ({
             setIsLoggedIn={setIsLoggedIn}
             setCurrentUser={setCurrentUser}
             setOrders={setOrders}
+            setUsers={setUsers}
             navbarAuth={s.navbarAuth}
             navbarLogin={s.navbarLogin}
             navbarLogout={s.navbarLogout}
@@ -122,6 +124,7 @@ Header.propTypes = {
   currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func.isRequired,
   setOrders: PropTypes.func.isRequired,
+  setUsers: PropTypes.func.isRequired,
   throwSuccessPopup: PropTypes.func.isRequired,
   throwErrorPopup: PropTypes.func.isRequired,
 };

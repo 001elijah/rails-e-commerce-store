@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  get 'react_users/index'
   resources :orders
 
+  resources :react_users
+  
   resources :react_orders
-  get :react_orders, to: "react_orders#react_orders"
+  # get :react_orders, to: "react_orders#react_orders"
 
   resources :sessions, only: :create
   get :logged_in, to: "sessions#logged_in"

@@ -78,3 +78,12 @@ export const getAllOrdersApi = async () => {
   const { data } = await axios.get("/react_orders.json", { withCredentials: true });
   return data;
 };
+
+// --------------------------------------------USERS----------------------//
+
+export const getAllUsersApi = async () => {
+  const { data } = await axios.get("/react_users.json", {
+    withCredentials: true,
+  });
+  return data;
+};

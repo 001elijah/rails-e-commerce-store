@@ -13,6 +13,7 @@ import {
   checkLoginStatusApi,
   getAllItemsApi,
   getAllOrdersApi,
+  getAllUsersApi,
   getUserOrdersApi,
 } from "./services/backendAPI";
 import AllUsersPage from "./pages/AllUsersPage";
@@ -25,12 +26,27 @@ function App() {
   const [items, setItems] = useState([]);
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const throwSuccessPopup = (message) => toast.success(message);
 
   const throwInfoPopup = (message) => toast.info(message);
 
   const throwErrorPopup = (message) => toast.error(message);
+
+  useEffect(() => {
+    if (currentUser?.role === "admin") {
+      (async () => {
+        try {
+          const allUsers = await getAllUsersApi();
+          setUsers(prevUsers => [...prevUsers, ...allUsers])
+        } catch (error) {
+          throwErrorPopup(error.message);
+        }
+      })()
+    }
+  }, [currentUser?.role])
+  
 
   useEffect(() => {
     (async () => {
@@ -100,6 +116,7 @@ function App() {
               currentUser={currentUser}
               setCurrentUser={setCurrentUser}
               setOrders={setOrders}
+              setUsers={setUsers}
               throwSuccessPopup={throwSuccessPopup}
               throwErrorPopup={throwErrorPopup}
             />
@@ -127,13 +144,14 @@ function App() {
                 cart={cart}
                 handleRemoveFromCart={handleRemoveFromCart}
                 resetCart={resetCart}
+                setOrders={setOrders}
                 throwSuccessPopup={throwSuccessPopup}
                 throwErrorPopup={throwErrorPopup}
               />
             }
           />
           <Route path="/orders" element={<OrdersPage orders={orders} />} />
-          <Route path="/users" element={<AllUsersPage currentUser={currentUser} />} />
+          <Route path="/users" element={<AllUsersPage currentUser={currentUser} users={users} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>

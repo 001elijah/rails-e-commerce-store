@@ -85,6 +85,7 @@ export default function CartTable({
   rows,
   handleRemoveFromCart,
   resetCart,
+  setOrders,
   throwSuccessPopup,
   throwErrorPopup,
 }) {
@@ -93,8 +94,9 @@ export default function CartTable({
 
   const handleBuy = async () => {
     try {
-      await addOrderApi({ user_id: currentUser?.id, amount: sum });
-      navigate("/");
+      const response = await addOrderApi({ user_id: currentUser?.id, amount: sum });
+      setOrders((prevOrders) => [...prevOrders, response.order]);
+      navigate("/orders");
       throwSuccessPopup("Your order has been payed, thanks!");
       resetCart();
     } catch (error) {
@@ -161,6 +163,7 @@ CartTable.propTypes = {
   rows: PropTypes.array.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,
+  setOrders: PropTypes.func.isRequired,
   throwSuccessPopup: PropTypes.func.isRequired,
   throwErrorPopup: PropTypes.func.isRequired,
 };

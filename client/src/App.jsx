@@ -35,6 +35,32 @@ function App() {
   const throwErrorPopup = (message) => toast.error(message);
 
   useEffect(() => {
+    try {
+      const items = JSON.parse(localStorage.getItem(currentUser?.id) || "");
+      if (items) {
+        setCart(items);
+      } else {
+        setCart([]);
+      }
+    } catch (error) {
+      setCart([]);
+    }
+  }, [currentUser?.id]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      try {
+        localStorage.setItem(
+          currentUser?.id,
+          JSON.stringify(cart),
+        );
+      } catch (error) {
+        throwErrorPopup(error.message);
+      }
+    }
+  }, [isLoggedIn, currentUser?.id, cart]);
+
+  useEffect(() => {
     if (currentUser?.role === "admin") {
       (async () => {
         try {

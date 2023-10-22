@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import UsersTable from "../components/UsersTable/UsersTable";
 
 function createRecentCustomers(
@@ -60,12 +61,28 @@ const recentCustomers = [
   ),
 ];
 
-const AllUsersPage = () => {
+const AllUsersPage = ({currentUser}) => {
   return (
     <div className="sectionContainer">
-      <UsersTable rows={recentCustomers} />
+      {
+        currentUser?.role === "admin" ?
+        <UsersTable rows={recentCustomers} /> :
+          <>
+            <h2>My profile</h2>
+            <p>User id: {currentUser?.id}</p>
+            <p>Email: {currentUser?.email}</p>
+            <p>Date created: {new Date(currentUser?.created_at).toLocaleDateString("en-US")}</p>
+            <p>First name: {currentUser?.first_name}</p>
+            <p>Last name: {currentUser?.last_name}</p>
+            <p>Role: {currentUser?.role}</p>
+          </>
+      }
     </div>
   );
+};
+
+AllUsersPage.propTypes = {
+  currentUser: PropTypes.object
 };
 
 export default AllUsersPage;

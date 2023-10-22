@@ -41,7 +41,6 @@ const LoginModal = ({
         }
         setIsLoggedIn(true);
         throwSuccessPopup(`Welcome back, ${response.user.first_name}!`);
-        console.log("onLogin", response);
         actions.resetForm({ values: { email: "", password: "" } });
         setCurrentUser(response.user);
         setIsModalOpen(false);

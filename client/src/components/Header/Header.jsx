@@ -12,6 +12,7 @@ const Header = ({
   setIsLoggedIn,
   currentUser,
   setCurrentUser,
+  setOrders,
   throwSuccessPopup,
   throwErrorPopup,
 }) => {
@@ -24,34 +25,84 @@ const Header = ({
               {(isLoggedIn
                 ? SIDEBAR_DATA_LOGGED_IN
                 : SIDEBAR_DATA_LOGGED_OUT
-              ).map(({ path, title }) => (
-                <li key={path}>
-                  <NavLink
-                    className={s.navItem}
-                    style={({ isActive }) =>
-                      isActive
-                        ? {
-                            color: "#ffb700",
-                            cursor: "default",
-                            background: "none",
-                          }
-                        : { color: "#2c2c2c" }
-                    }
-                    to={path}
-                  >
-                    {title}
-                  </NavLink>
-                </li>
-              ))}
+              ).map(({ path, title, access }) => {
+                if (
+                  isLoggedIn &&
+                  currentUser?.role === "admin" &&
+                  access !== "user"
+                ) {
+                  return (
+                    <li key={path}>
+                      <NavLink
+                        className={s.navItem}
+                        style={({ isActive }) =>
+                          isActive
+                            ? {
+                                color: "#ffb700",
+                                cursor: "default",
+                                background: "none",
+                              }
+                            : { color: "#2c2c2c" }
+                        }
+                        to={path}
+                      >
+                        {title}
+                      </NavLink>
+                    </li>
+                  );
+                } else if (
+                  isLoggedIn &&
+                  currentUser?.role === "user" &&
+                  access !== "admin"
+                ) {
+                  return (
+                    <li key={path}>
+                      <NavLink
+                        className={s.navItem}
+                        style={({ isActive }) =>
+                          isActive
+                            ? {
+                                color: "#ffb700",
+                                cursor: "default",
+                                background: "none",
+                              }
+                            : { color: "#2c2c2c" }
+                        }
+                        to={path}
+                      >
+                        {title}
+                      </NavLink>
+                    </li>
+                  );
+                } else if (!isLoggedIn) {
+                  return (
+                    <li key={path}>
+                      <NavLink
+                        className={s.navItem}
+                        style={({ isActive }) =>
+                          isActive
+                            ? {
+                                color: "#ffb700",
+                                cursor: "default",
+                                background: "none",
+                              }
+                            : { color: "#2c2c2c" }
+                        }
+                        to={path}
+                      >
+                        {title}
+                      </NavLink>
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </nav>
-          <p>Logged in: {isLoggedIn ? "true" : "false"}</p>
-          <p>User: {currentUser?.email}</p>
-          <p>Role: {currentUser?.role}</p>
           <NavbarAuth
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             setCurrentUser={setCurrentUser}
+            setOrders={setOrders}
             navbarAuth={s.navbarAuth}
             navbarLogin={s.navbarLogin}
             navbarLogout={s.navbarLogout}
@@ -70,6 +121,7 @@ Header.propTypes = {
   setIsLoggedIn: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func.isRequired,
+  setOrders: PropTypes.func.isRequired,
   throwSuccessPopup: PropTypes.func.isRequired,
   throwErrorPopup: PropTypes.func.isRequired,
 };

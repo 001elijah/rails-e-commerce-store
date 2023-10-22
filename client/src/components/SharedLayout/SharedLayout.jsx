@@ -8,6 +8,7 @@ const SharedLayout = ({
   setIsLoggedIn,
   currentUser,
   setCurrentUser,
+  setOrders,
   throwSuccessPopup,
   throwErrorPopup,
 }) => {
@@ -18,6 +19,7 @@ const SharedLayout = ({
         setIsLoggedIn={setIsLoggedIn}
         currentUser={currentUser}
         setCurrentUser={setCurrentUser}
+        setOrders={setOrders}
         throwSuccessPopup={throwSuccessPopup}
         throwErrorPopup={throwErrorPopup}
       />
@@ -31,6 +33,7 @@ SharedLayout.propTypes = {
   setIsLoggedIn: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   setCurrentUser: PropTypes.func.isRequired,
+  setOrders: PropTypes.func.isRequired,
   throwSuccessPopup: PropTypes.func.isRequired,
   throwErrorPopup: PropTypes.func.isRequired,
 };

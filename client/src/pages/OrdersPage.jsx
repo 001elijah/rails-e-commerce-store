@@ -4,7 +4,7 @@ import OrdersTable from "../components/OrdersTable/OrdersTable";
 const OrdersPage = ({ orders }) => {
   return (
     <div className="sectionContainer">
-      <OrdersTable rows={orders} />
+      {orders.length > 0 ? <OrdersTable rows={orders} /> : <p>No orders yet!</p>}
     </div>
   );
 };

@@ -27,7 +27,7 @@ export default function OrdersTable({ rows }) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.user_id}
+                  {row.react_user_id}
                 </TableCell>
                 <TableCell align="right">${row.amount}</TableCell>
                 <TableCell align="right">

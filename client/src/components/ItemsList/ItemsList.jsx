@@ -8,6 +8,7 @@ import ModalPortal from "../ModalPortal/ModalPortal";
 import AddNewItemModal from "../AddNewItemModal/AddNewItemModal";
 
 const ItemsList = ({
+  currentUser,
   onManageItems,
   items,
   cart,
@@ -27,20 +28,22 @@ const ItemsList = ({
   };
   return (
     <>
-      <div className={s.controlsWrapper}>
-        <h1 className={s.title}>Items</h1>
-        <CustomAccentButton
-          type="button"
-          title="Toggle view"
-          onClick={handleToggleView}
-        />
-        <CustomAccentButton
-          type="button"
-          title="Add new"
-          style={s.addNewBtn}
-          onClick={handleOpenModal}
-        />
-      </div>
+      <h1 className={s.title}>Items</h1>
+      {currentUser?.role === "admin" && (
+        <div className={s.controlsWrapper}>
+          <CustomAccentButton
+            type="button"
+            title="Toggle view"
+            onClick={handleToggleView}
+          />
+          <CustomAccentButton
+            type="button"
+            title="Add new"
+            style={s.addNewBtn}
+            onClick={handleOpenModal}
+          />
+        </div>
+      )}
       {enableTableView ? (
         <ItemsTable
           onManageItems={onManageItems}
@@ -54,6 +57,7 @@ const ItemsList = ({
             return (
               <li key={item.id}>
                 <ItemCard
+                  currentUser={currentUser}
                   onManageItems={onManageItems}
                   id={item.id}
                   name={item.name}
@@ -83,6 +87,7 @@ const ItemsList = ({
 };
 
 ItemsList.propTypes = {
+  currentUser: PropTypes.object,
   cart: PropTypes.array.isRequired,
   setCart: PropTypes.func.isRequired,
   onManageItems: PropTypes.func.isRequired,

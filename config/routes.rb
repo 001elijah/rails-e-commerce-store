@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   resources :orders
+
+  resources :react_orders
+  get :react_orders, to: "react_orders#react_orders"
+
   resources :sessions, only: :create
-  resources :registrations, only: :create
-  delete :logout, to: "sessions#logout"
   get :logged_in, to: "sessions#logged_in"
+  delete :logout, to: "sessions#logout"
+  resources :registrations, only: :create
 
   get 'cart', to: 'cart#show'
   post 'cart/add'

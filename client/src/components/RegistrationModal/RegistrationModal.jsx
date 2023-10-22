@@ -65,7 +65,6 @@ const RegistrationModal = ({
           throw new Error("Server error!");
         }
         setIsLoggedIn(true);
-        console.log("onSubmit", response);
         throwSuccessPopup(`Welcome to the shop, ${response.user.first_name}!`);
         actions.resetForm({
           values: {
@@ -113,6 +112,7 @@ const RegistrationModal = ({
         >
           <img src={X} alt="close" />
         </button>
+        <h2 className={s.title}>Register</h2>
         <label className={s.nameInputWrapper}>
           <input
             className={s.nameInput}

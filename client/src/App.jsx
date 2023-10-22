@@ -13,6 +13,7 @@ import {
   checkLoginStatusApi,
   getAllItemsApi,
   getAllOrdersApi,
+  getUserOrdersApi,
 } from "./services/backendAPI";
 import AllUsersPage from "./pages/AllUsersPage";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,8 +36,9 @@ function App() {
     (async () => {
       try {
         const response = await checkLoginStatusApi();
-        response.user ? throwInfoPopup(`Welcome back, ${response.user.first_name}!`) :
-        throwInfoPopup(`Please authenticate!`);
+        response.user
+          ? throwInfoPopup(`Welcome back, ${response.user.first_name}!`)
+          : throwInfoPopup(`Please authenticate!`);
         if (response.logged_in && !isLoggedIn) {
           setIsLoggedIn(true);
           setCurrentUser(response.user);
@@ -64,17 +66,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const orders = await getAllOrdersApi();
-        if (orders) {
-          setOrders((prevOrders) => [...prevOrders, ...orders]);
+    if (isLoggedIn) {
+      (async () => {
+        try {
+          const orders = currentUser?.role === "admin" ? await getAllOrdersApi() : await getUserOrdersApi(currentUser?.id);
+          if (orders) {
+            setOrders((prevOrders) => [...prevOrders, ...orders]);
+          }
+        } catch (error) {
+          throwErrorPopup(error.message);
         }
-      } catch (error) {
-        throwErrorPopup(error.message);
-      }
-    })();
-  }, []);
+      })();
+    }
+  }, [isLoggedIn, currentUser?.id, currentUser?.role]);
 
   const handleRemoveFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((prevItem) => prevItem.id !== id));
@@ -95,6 +99,7 @@ function App() {
               setIsLoggedIn={setIsLoggedIn}
               currentUser={currentUser}
               setCurrentUser={setCurrentUser}
+              setOrders={setOrders}
               throwSuccessPopup={throwSuccessPopup}
               throwErrorPopup={throwErrorPopup}
             />
@@ -104,6 +109,7 @@ function App() {
             index
             element={
               <HomePage
+                currentUser={currentUser}
                 items={items}
                 onManageItems={setItems}
                 cart={cart}
@@ -117,6 +123,7 @@ function App() {
             path="/cart"
             element={
               <CartPage
+                currentUser={currentUser}
                 cart={cart}
                 handleRemoveFromCart={handleRemoveFromCart}
                 resetCart={resetCart}
@@ -126,7 +133,7 @@ function App() {
             }
           />
           <Route path="/orders" element={<OrdersPage orders={orders} />} />
-          <Route path="/users" element={<AllUsersPage />} />
+          <Route path="/users" element={<AllUsersPage currentUser={currentUser} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>

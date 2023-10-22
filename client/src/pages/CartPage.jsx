@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import CartTable from "../components/CartTable/CartTable";
 
 const CartPage = ({
+  currentUser,
   cart,
   handleRemoveFromCart,
   resetCart,
@@ -13,6 +14,7 @@ const CartPage = ({
       {cart.length ? (
         <div className="sectionContainer">
           <CartTable
+            currentUser={currentUser}
             rows={cart}
             handleRemoveFromCart={handleRemoveFromCart}
             resetCart={resetCart}
@@ -30,6 +32,7 @@ const CartPage = ({
 };
 
 CartPage.propTypes = {
+  currentUser: PropTypes.object,
   cart: PropTypes.array.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,

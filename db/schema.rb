@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_21_164007) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_22_163559) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,6 +45,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_21_164007) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "react_orders", force: :cascade do |t|
+    t.bigint "react_user_id", null: false
+    t.decimal "amount", precision: 8, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["react_user_id"], name: "index_react_orders_on_react_user_id"
+  end
+
   create_table "react_users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -73,4 +81,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_21_164007) do
   add_foreign_key "orderables", "carts"
   add_foreign_key "orderables", "items"
   add_foreign_key "orders", "users"
+  add_foreign_key "react_orders", "react_users"
 end

@@ -81,6 +81,7 @@ const ItemRow = ({ rows, row, handleRemoveFromCart, setSum }) => {
 };
 
 export default function CartTable({
+  currentUser,
   rows,
   handleRemoveFromCart,
   resetCart,
@@ -92,7 +93,7 @@ export default function CartTable({
 
   const handleBuy = async () => {
     try {
-      await addOrderApi({ user_id: 1, amount: sum });
+      await addOrderApi({ user_id: currentUser?.id, amount: sum });
       navigate("/");
       throwSuccessPopup("Your order has been payed, thanks!");
       resetCart();
@@ -156,6 +157,7 @@ ItemRow.propTypes = {
 };
 
 CartTable.propTypes = {
+  currentUser: PropTypes.object,
   rows: PropTypes.array.isRequired,
   handleRemoveFromCart: PropTypes.func.isRequired,
   resetCart: PropTypes.func.isRequired,

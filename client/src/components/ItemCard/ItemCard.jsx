@@ -7,6 +7,7 @@ import EditItemModal from "../EditItemModal/EditItemModal";
 import { destroyItemApi } from "../../services/backendAPI";
 
 const ItemCard = ({
+  currentUser,
   onManageItems,
   id,
   name,
@@ -55,19 +56,21 @@ const ItemCard = ({
   return (
     <>
       <div className={s.cardWrapper}>
-        <div className={s.controlsWrapper}>
-          <CustomAccentButton
-            type="button"
-            title="Edit item"
-            onClick={handleOpenModal}
-          />
-          <CustomAccentButton
-            type="button"
-            title="Destroy"
-            style={s.destroyBtn}
-            onClick={handleDestroyItem}
-          />
-        </div>
+        {currentUser?.role === "admin" && (
+          <div className={s.controlsWrapper}>
+            <CustomAccentButton
+              type="button"
+              title="Edit item"
+              onClick={handleOpenModal}
+            />
+            <CustomAccentButton
+              type="button"
+              title="Destroy"
+              style={s.destroyBtn}
+              onClick={handleDestroyItem}
+            />
+          </div>
+        )}
         <div className={s.itemCard}>
           <div className={s.rowDirection}>
             <div className={s.columnDirection}>
@@ -77,7 +80,7 @@ const ItemCard = ({
             <span className={s.bigBoldText}>${price}</span>
           </div>
         </div>
-        <div className={s.bottomControlsWrapper}>
+        {currentUser?.role === "user" && <div className={s.bottomControlsWrapper}>
           <input
             className={s.styledInput}
             type="number"
@@ -92,7 +95,7 @@ const ItemCard = ({
             style={s.addToCartBtn}
             onClick={handleAddToCart}
           />
-        </div>
+        </div>}
       </div>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <EditItemModal
@@ -112,6 +115,7 @@ const ItemCard = ({
 };
 
 ItemCard.propTypes = {
+  currentUser: PropTypes.object,
   onManageItems: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,

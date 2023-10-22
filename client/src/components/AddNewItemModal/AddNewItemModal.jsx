@@ -33,7 +33,6 @@ const AddNewItemModal = ({
         const item = await addItemApi(values);
         onManageItems((items) => [...items, item]);
         throwSuccessPopup("New item created!");
-        console.log("onSubmit", item);
         actions.resetForm({ values: { name: "", description: "", price: "" } });
         setIsModalOpen(false);
       } catch (error) {

@@ -9,6 +9,7 @@ const NavbarAuth = ({
   isLoggedIn,
   setIsLoggedIn,
   setCurrentUser,
+  setOrders,
   toggleSidebar,
   navbarAuth,
   navbarLogin,
@@ -39,12 +40,11 @@ const NavbarAuth = ({
 
   const handleLogout = async () => {
     try {
-      const response = await logoutUserApi();
+      await logoutUserApi();
       setIsLoggedIn(false);
       setCurrentUser(null);
-      console.log("handleLogout", response);
+      setOrders([]);
       throwSuccessPopup("Logged out successfully!");
-      // localStorage.setItem("favoriteTeachers", JSON.stringify([]));
       navigate("/");
     } catch (error) {
       throwErrorPopup(error.message);
@@ -105,6 +105,7 @@ NavbarAuth.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   setIsLoggedIn: PropTypes.func.isRequired,
   setCurrentUser: PropTypes.func.isRequired,
+  setOrders: PropTypes.func.isRequired,
   toggleSidebar: PropTypes.func,
   navbarAuth: PropTypes.string.isRequired,
   navbarLogin: PropTypes.string.isRequired,

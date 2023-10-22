@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import ItemsList from "../components/ItemsList/ItemsList";
 
 const HomePage = ({
+  currentUser,
   onManageItems,
   items,
   cart,
@@ -12,6 +13,7 @@ const HomePage = ({
   return (
     <div className="sectionContainer">
       <ItemsList
+        currentUser={currentUser}
         items={items}
         onManageItems={onManageItems}
         cart={cart}
@@ -24,6 +26,7 @@ const HomePage = ({
 };
 
 HomePage.propTypes = {
+  currentUser: PropTypes.object,
   cart: PropTypes.array.isRequired,
   setCart: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,

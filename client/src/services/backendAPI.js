@@ -62,13 +62,19 @@ export const destroyItemApi = async (id) => {
 // --------------------------------------------ORDERS----------------------//
 
 export const addOrderApi = async (orderData) => {
-  const { data } = await axios.post("/orders.json", orderData, {
+  const { data } = await axios.post("/react_orders", orderData, {
     withCredentials: true,
   });
   return data;
 };
 
+export const getUserOrdersApi = async (userId) => {
+  const { data } = await axios.get("/react_orders.json");
+  const filteredData = data.filter((order) => order.react_user_id === userId);
+  return filteredData;
+};
+
 export const getAllOrdersApi = async () => {
-  const { data } = await axios.get("/orders.json", { withCredentials: true });
+  const { data } = await axios.get("/react_orders.json", { withCredentials: true });
   return data;
 };

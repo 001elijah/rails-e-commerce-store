@@ -80,22 +80,24 @@ const ItemCard = ({
             <span className={s.bigBoldText}>${price}</span>
           </div>
         </div>
-        {currentUser?.role === "user" && <div className={s.bottomControlsWrapper}>
-          <input
-            className={s.styledInput}
-            type="number"
-            name="quantity"
-            min="0"
-            value={itemQuantity}
-            onChange={(e) => setItemQuantity(e.target.value)}
-          />
-          <CustomAccentButton
-            type="button"
-            title="Add to cart"
-            style={s.addToCartBtn}
-            onClick={handleAddToCart}
-          />
-        </div>}
+        {currentUser?.role === "user" && (
+          <div className={s.bottomControlsWrapper}>
+            <input
+              className={s.styledInput}
+              type="number"
+              name="quantity"
+              min="0"
+              value={itemQuantity}
+              onChange={(e) => setItemQuantity(e.target.value)}
+            />
+            <CustomAccentButton
+              type="button"
+              title="Add to cart"
+              style={s.addToCartBtn}
+              onClick={handleAddToCart}
+            />
+          </div>
+        )}
       </div>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <EditItemModal

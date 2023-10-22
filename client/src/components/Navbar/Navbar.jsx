@@ -13,7 +13,16 @@ import NavbarAuth from "../NavbarAuth/NavbarAuth";
 import s from "./Navbar.module.scss";
 import ModalPortal from "../ModalPortal/ModalPortal";
 
-const Navbar = ({ isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser, setOrders, setUsers, throwSuccessPopup, throwErrorPopup }) => {
+const Navbar = ({
+  isLoggedIn,
+  setIsLoggedIn,
+  currentUser,
+  setCurrentUser,
+  setOrders,
+  setUsers,
+  throwSuccessPopup,
+  throwErrorPopup,
+}) => {
   const [sidebar, setSidebar] = useState(false);
   const toggleSidebar = () => setSidebar(!sidebar);
   useEffect(() => {
@@ -60,13 +69,15 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser, setOrd
                     <li key={index} className={s.navText}>
                       <NavLink
                         to={item.path}
-                      onClick={() => {
-                        toggleSidebar();
-                      }}
-                      className={({ isActive }) => (isActive ? s.isActive : "")}
+                        onClick={() => {
+                          toggleSidebar();
+                        }}
+                        className={({ isActive }) =>
+                          isActive ? s.isActive : ""
+                        }
                       >
                         {item.icons}
-                      <span>{item.title}</span>
+                        <span>{item.title}</span>
                       </NavLink>
                     </li>
                   );
@@ -79,13 +90,15 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser, setOrd
                     <li key={index} className={s.navText}>
                       <NavLink
                         to={item.path}
-                      onClick={() => {
-                        toggleSidebar();
-                      }}
-                      className={({ isActive }) => (isActive ? s.isActive : "")}
+                        onClick={() => {
+                          toggleSidebar();
+                        }}
+                        className={({ isActive }) =>
+                          isActive ? s.isActive : ""
+                        }
                       >
                         {item.icons}
-                      <span>{item.title}</span>
+                        <span>{item.title}</span>
                       </NavLink>
                     </li>
                   );
@@ -94,13 +107,15 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser, setOrd
                     <li key={index} className={s.navText}>
                       <NavLink
                         to={item.path}
-                      onClick={() => {
-                        toggleSidebar();
-                      }}
-                      className={({ isActive }) => (isActive ? s.isActive : "")}
+                        onClick={() => {
+                          toggleSidebar();
+                        }}
+                        className={({ isActive }) =>
+                          isActive ? s.isActive : ""
+                        }
                       >
                         {item.icons}
-                      <span>{item.title}</span>
+                        <span>{item.title}</span>
                       </NavLink>
                     </li>
                   );
@@ -108,18 +123,18 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser, setOrd
               })}
             </ul>
             <NavbarAuth
-                isLoggedIn={isLoggedIn}
-                setIsLoggedIn={setIsLoggedIn}
-                setCurrentUser={setCurrentUser}
-                setOrders={setOrders}
-                setUsers={setUsers}
-                navbarAuth={s.navbarAuth}
-                navbarLogin={s.navbarLogin}
-                navbarLogout={s.navbarLogout}
-                navbarRegister={s.navbarRegister}
-                throwSuccessPopup={throwSuccessPopup}
-                          throwErrorPopup={throwErrorPopup}
-                          toggleSidebar={toggleSidebar}
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              setCurrentUser={setCurrentUser}
+              setOrders={setOrders}
+              setUsers={setUsers}
+              navbarAuth={s.navbarAuth}
+              navbarLogin={s.navbarLogin}
+              navbarLogout={s.navbarLogout}
+              navbarRegister={s.navbarRegister}
+              throwSuccessPopup={throwSuccessPopup}
+              throwErrorPopup={throwErrorPopup}
+              toggleSidebar={toggleSidebar}
             />
           </nav>
         </ModalPortal>
@@ -129,14 +144,14 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser, setOrd
 };
 
 Navbar.propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-    setIsLoggedIn: PropTypes.func.isRequired,
-    currentUser: PropTypes.object,
-    setCurrentUser: PropTypes.func.isRequired,
-    setOrders: PropTypes.func.isRequired,
-    setUsers: PropTypes.func.isRequired,
-    throwSuccessPopup: PropTypes.func.isRequired,
-    throwErrorPopup: PropTypes.func.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  setIsLoggedIn: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
+  setCurrentUser: PropTypes.func.isRequired,
+  setOrders: PropTypes.func.isRequired,
+  setUsers: PropTypes.func.isRequired,
+  throwSuccessPopup: PropTypes.func.isRequired,
+  throwErrorPopup: PropTypes.func.isRequired,
 };
 
 export default Navbar;

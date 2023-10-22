@@ -50,10 +50,7 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       try {
-        localStorage.setItem(
-          currentUser?.id,
-          JSON.stringify(cart),
-        );
+        localStorage.setItem(currentUser?.id, JSON.stringify(cart));
       } catch (error) {
         throwErrorPopup(error.message);
       }
@@ -65,14 +62,13 @@ function App() {
       (async () => {
         try {
           const allUsers = await getAllUsersApi();
-          setUsers(prevUsers => [...prevUsers, ...allUsers])
+          setUsers((prevUsers) => [...prevUsers, ...allUsers]);
         } catch (error) {
           throwErrorPopup(error.message);
         }
-      })()
+      })();
     }
-  }, [currentUser?.role])
-  
+  }, [currentUser?.role]);
 
   useEffect(() => {
     (async () => {
@@ -111,7 +107,10 @@ function App() {
     if (isLoggedIn) {
       (async () => {
         try {
-          const orders = currentUser?.role === "admin" ? await getAllOrdersApi() : await getUserOrdersApi(currentUser?.id);
+          const orders =
+            currentUser?.role === "admin"
+              ? await getAllOrdersApi()
+              : await getUserOrdersApi(currentUser?.id);
           if (orders) {
             setOrders((prevOrders) => [...prevOrders, ...orders]);
           }
@@ -177,7 +176,10 @@ function App() {
             }
           />
           <Route path="/orders" element={<OrdersPage orders={orders} />} />
-          <Route path="/users" element={<AllUsersPage currentUser={currentUser} users={users} />} />
+          <Route
+            path="/users"
+            element={<AllUsersPage currentUser={currentUser} users={users} />}
+          />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>

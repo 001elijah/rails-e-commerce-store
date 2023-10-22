@@ -67,7 +67,9 @@ const ItemRow = ({ rows, row, handleRemoveFromCart, setSum }) => {
         )}
       </TableCell>
       <TableCell align="right">Manage</TableCell>
-      <TableCell align="right">${Math.round((+row.price * row.quantity) * 100) / 100}</TableCell>
+      <TableCell align="right">
+        ${Math.round(+row.price * row.quantity * 100) / 100}
+      </TableCell>
       <TableCell align="right">
         <CustomAccentButton
           type="button"
@@ -94,7 +96,10 @@ export default function CartTable({
 
   const handleBuy = async () => {
     try {
-      const response = await addOrderApi({ user_id: currentUser?.id, amount: Math.round(sum * 100) / 100});
+      const response = await addOrderApi({
+        user_id: currentUser?.id,
+        amount: Math.round(sum * 100) / 100,
+      });
       setOrders((prevOrders) => [...prevOrders, response.order]);
       navigate("/orders");
       throwSuccessPopup("Your order has been payed, thanks!");

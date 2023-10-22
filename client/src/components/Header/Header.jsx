@@ -22,108 +22,118 @@ const Header = ({
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   return (
     <header className={s.header}>
-      {!isMobile ?
+      {!isMobile ? (
         <div className="headerContainer">
-        <div className={s.headerFlexWrapper}>
-          <nav>
-            <ul className={s.topNavbar}>
-              {(isLoggedIn
-                ? SIDEBAR_DATA_LOGGED_IN
-                : SIDEBAR_DATA_LOGGED_OUT
-              ).map(({ path, title, access }) => {
-                if (
-                  isLoggedIn &&
-                  currentUser?.role === "admin" &&
-                  access !== "user"
-                ) {
-                  return (
-                    <li key={path}>
-                      <NavLink
-                        className={s.navItem}
-                        style={({ isActive }) =>
-                          isActive
-                            ? {
-                                color: "#ffb700",
-                                cursor: "default",
-                                background: "none",
-                              }
-                            : { color: "#2c2c2c" }
-                        }
-                        to={path}
-                      >
-                        {title}
-                      </NavLink>
-                    </li>
-                  );
-                } else if (
-                  isLoggedIn &&
-                  currentUser?.role === "user" &&
-                  access !== "admin"
-                ) {
-                  return (
-                    <li key={path}>
-                      <NavLink
-                        className={s.navItem}
-                        style={({ isActive }) =>
-                          isActive
-                            ? {
-                                color: "#ffb700",
-                                cursor: "default",
-                                background: "none",
-                              }
-                            : { color: "#2c2c2c" }
-                        }
-                        to={path}
-                      >
-                        {title}
-                      </NavLink>
-                    </li>
-                  );
-                } else if (!isLoggedIn) {
-                  return (
-                    <li key={path}>
-                      <NavLink
-                        className={s.navItem}
-                        style={({ isActive }) =>
-                          isActive
-                            ? {
-                                color: "#ffb700",
-                                cursor: "default",
-                                background: "none",
-                              }
-                            : { color: "#2c2c2c" }
-                        }
-                        to={path}
-                      >
-                        {title}
-                      </NavLink>
-                    </li>
-                  );
-                }
-              })}
-            </ul>
-          </nav>
-          <NavbarAuth
-            isLoggedIn={isLoggedIn}
-            setIsLoggedIn={setIsLoggedIn}
-            setCurrentUser={setCurrentUser}
-            setOrders={setOrders}
-            setUsers={setUsers}
-            navbarAuth={s.navbarAuth}
-            navbarLogin={s.navbarLogin}
-            navbarLogout={s.navbarLogout}
-            navbarRegister={s.navbarRegister}
-            throwSuccessPopup={throwSuccessPopup}
-            throwErrorPopup={throwErrorPopup}
-          />
-        </div>
-        </div> :
-          <div className="headerContainer">
-            <div className={s.headerFlexWrapper}>
-            <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser}  setOrders={setOrders} setUsers={setUsers} currentUser={currentUser} throwSuccessPopup={throwSuccessPopup} throwErrorPopup={throwErrorPopup} />
-            </div>
+          <div className={s.headerFlexWrapper}>
+            <nav>
+              <ul className={s.topNavbar}>
+                {(isLoggedIn
+                  ? SIDEBAR_DATA_LOGGED_IN
+                  : SIDEBAR_DATA_LOGGED_OUT
+                ).map(({ path, title, access }) => {
+                  if (
+                    isLoggedIn &&
+                    currentUser?.role === "admin" &&
+                    access !== "user"
+                  ) {
+                    return (
+                      <li key={path}>
+                        <NavLink
+                          className={s.navItem}
+                          style={({ isActive }) =>
+                            isActive
+                              ? {
+                                  color: "#ffb700",
+                                  cursor: "default",
+                                  background: "none",
+                                }
+                              : { color: "#2c2c2c" }
+                          }
+                          to={path}
+                        >
+                          {title}
+                        </NavLink>
+                      </li>
+                    );
+                  } else if (
+                    isLoggedIn &&
+                    currentUser?.role === "user" &&
+                    access !== "admin"
+                  ) {
+                    return (
+                      <li key={path}>
+                        <NavLink
+                          className={s.navItem}
+                          style={({ isActive }) =>
+                            isActive
+                              ? {
+                                  color: "#ffb700",
+                                  cursor: "default",
+                                  background: "none",
+                                }
+                              : { color: "#2c2c2c" }
+                          }
+                          to={path}
+                        >
+                          {title}
+                        </NavLink>
+                      </li>
+                    );
+                  } else if (!isLoggedIn) {
+                    return (
+                      <li key={path}>
+                        <NavLink
+                          className={s.navItem}
+                          style={({ isActive }) =>
+                            isActive
+                              ? {
+                                  color: "#ffb700",
+                                  cursor: "default",
+                                  background: "none",
+                                }
+                              : { color: "#2c2c2c" }
+                          }
+                          to={path}
+                        >
+                          {title}
+                        </NavLink>
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </nav>
+            <NavbarAuth
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              setCurrentUser={setCurrentUser}
+              setOrders={setOrders}
+              setUsers={setUsers}
+              navbarAuth={s.navbarAuth}
+              navbarLogin={s.navbarLogin}
+              navbarLogout={s.navbarLogout}
+              navbarRegister={s.navbarRegister}
+              throwSuccessPopup={throwSuccessPopup}
+              throwErrorPopup={throwErrorPopup}
+            />
           </div>
-        }
+        </div>
+      ) : (
+        <div className="headerContainer">
+          <div className={s.headerFlexWrapper}>
+            <Navbar
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              setCurrentUser={setCurrentUser}
+              setOrders={setOrders}
+              setUsers={setUsers}
+              currentUser={currentUser}
+              throwSuccessPopup={throwSuccessPopup}
+              throwErrorPopup={throwErrorPopup}
+            />
+          </div>
+        </div>
+      )}
     </header>
   );
 };

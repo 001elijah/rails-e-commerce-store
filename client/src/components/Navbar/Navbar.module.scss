@@ -1,109 +1,87 @@
 @import "../../assets/styles/vars";
 
 .burgerIcon {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: #f8f8f8;
-    position: fixed;
-    top: 0;
-    left: -200%;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f8f8;
+  position: fixed;
+  top: 0;
+  left: -200%;
+  transition: 150ms;
+
+  z-index: 1;
+
+  &.active {
+    left: 0;
     transition: 150ms;
-
-    z-index: 1;
-
-    &.active {
-        left: 0;
-        transition: 150ms;
-    }
+  }
 }
 
 .navText {
-    height: 60px;
-    padding: 8px 16px 8px 16px;
+  height: 60px;
+  padding: 8px 16px 8px 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  & a {
+    width: 100%;
+    height: 100%;
+    padding: 0 16px;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-
-    & a {
-        width: 100%;
-        height: 100%;
-        padding: 0 16px;
-        display: flex;
-        align-items: center;
-        font-size: 18px;
-        color: $black-text-color;
-
-        cursor: default;
-    }
-
-    & a.isActive {
-        background: $accent-color;
-        border-radius: 12px;
-    }
-
-    & a span {
-        margin-left: 16px;
-    }
-}
-
-.navbarTop {
-    height: 64px;
-    padding: 20px 20px;
-    background-color: #f8f8f8;
-}
-
-.closeIcon {
-    width: 24px;
-    height: 24px;
-}
-
-.menuControls {
+    font-size: 18px;
     color: $black-text-color;
 
     cursor: default;
+  }
+
+  & a.isActive {
+    background: $accent-color;
+    border-radius: 12px;
+  }
+
+  & a span {
+    margin-left: 16px;
+  }
+}
+
+.navbarTop {
+  height: 64px;
+  padding: 20px 20px;
+  background-color: #f8f8f8;
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.menuControls {
+  color: $black-text-color;
+
+  cursor: default;
 }
 
 .navbarAuth {
-    margin-top: auto;
-    margin-bottom: 20px;
+  margin-top: auto;
+  margin-bottom: 20px;
 }
 
 .navbarLogin {
-    height: 60px;
-    padding: 8px 16px 8px 16px;
+  height: 60px;
+  padding: 8px 16px 8px 16px;
 
-    & button {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        background: none;
-        border: none;
-        font-family: "Roboto", sans-serif;
-        font-size: 18px;
-        color: $black-text-color;
-
-        & img {
-            margin-right: 8px;
-        }
-    }
-}
-
-.navbarLogout {
+  & button {
     width: 100%;
-    height: 60px;
-
-    margin-top: auto;
-    margin-bottom: 80px;
-    padding: 8px 16px 8px 16px;
-
+    height: 100%;
     display: flex;
     align-items: center;
     background: none;
@@ -113,27 +91,49 @@
     color: $black-text-color;
 
     & img {
-        margin-right: 8px;
+      margin-right: 8px;
     }
+  }
+}
+
+.navbarLogout {
+  width: 100%;
+  height: 60px;
+
+  margin-top: auto;
+  margin-bottom: 80px;
+  padding: 8px 16px 8px 16px;
+
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  color: $black-text-color;
+
+  & img {
+    margin-right: 8px;
+  }
 }
 
 .navbarRegister {
-    height: 60px;
-    padding: 8px 16px 8px 16px;
-    margin-bottom: 80px;
+  height: 60px;
+  padding: 8px 16px 8px 16px;
+  margin-bottom: 80px;
 
-    & button {
-        width: 100%;
-        height: 100%;
-        padding: 0 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #121417;
-        border: none;
-        border-radius: 12px;
-        font-family: "Roboto", sans-serif;
-        font-size: 18px;
-        color: $white-text-color;
-    }
+  & button {
+    width: 100%;
+    height: 100%;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #121417;
+    border: none;
+    border-radius: 12px;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    color: $white-text-color;
+  }
 }

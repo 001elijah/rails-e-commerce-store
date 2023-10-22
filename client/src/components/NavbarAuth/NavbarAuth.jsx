@@ -47,6 +47,7 @@ const NavbarAuth = ({
       setOrders([]);
       setUsers([]);
       throwSuccessPopup("Logged out successfully!");
+      toggleSidebar && (await toggleSidebar());
       navigate("/");
     } catch (error) {
       throwErrorPopup(error.message);

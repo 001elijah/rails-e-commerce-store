@@ -5,7 +5,9 @@ import {
 } from "../../utils/constants";
 import PropTypes from "prop-types";
 import NavbarAuth from "../NavbarAuth/NavbarAuth";
+import { useMediaQuery } from "react-responsive";
 import s from "./Header.module.scss";
+import Navbar from "../Navbar/Navbar";
 
 const Header = ({
   isLoggedIn,
@@ -17,9 +19,11 @@ const Header = ({
   throwSuccessPopup,
   throwErrorPopup,
 }) => {
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   return (
     <header className={s.header}>
-      <div className="headerContainer">
+      {!isMobile ?
+        <div className="headerContainer">
         <div className={s.headerFlexWrapper}>
           <nav>
             <ul className={s.topNavbar}>
@@ -113,7 +117,13 @@ const Header = ({
             throwErrorPopup={throwErrorPopup}
           />
         </div>
-      </div>
+        </div> :
+          <div className="headerContainer">
+            <div className={s.headerFlexWrapper}>
+            <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setCurrentUser={setCurrentUser}  setOrders={setOrders} setUsers={setUsers} currentUser={currentUser} throwSuccessPopup={throwSuccessPopup} throwErrorPopup={throwErrorPopup} />
+            </div>
+          </div>
+        }
     </header>
   );
 };

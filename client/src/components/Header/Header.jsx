@@ -6,8 +6,8 @@ import {
 import PropTypes from "prop-types";
 import NavbarAuth from "../NavbarAuth/NavbarAuth";
 import { useMediaQuery } from "react-responsive";
-import s from "./Header.module.scss";
 import Navbar from "../Navbar/Navbar";
+import s from "./Header.module.scss";
 
 const Header = ({
   isLoggedIn,

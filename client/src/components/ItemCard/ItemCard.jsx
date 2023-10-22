@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import s from "./ItemCard.module.scss";
 import CustomAccentButton from "../CustomAccentButton/CustomAccentButton";
 import { useState } from "react";
 import ModalPortal from "../ModalPortal/ModalPortal";
 import EditItemModal from "../EditItemModal/EditItemModal";
 import { destroyItemApi } from "../../services/backendAPI";
+import s from "./ItemCard.module.scss";
 
 const ItemCard = ({
   currentUser,

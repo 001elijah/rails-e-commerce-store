@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import s from "./ItemsList.module.scss";
 import ItemCard from "../ItemCard/ItemCard";
 import CustomAccentButton from "../CustomAccentButton/CustomAccentButton";
 import ItemsTable from "../ItemsTable/ItemsTable";
 import { useState } from "react";
 import ModalPortal from "../ModalPortal/ModalPortal";
 import AddNewItemModal from "../AddNewItemModal/AddNewItemModal";
+import s from "./ItemsList.module.scss";
 
 const ItemsList = ({
   currentUser,

@@ -6,9 +6,8 @@ import { useFormik } from "formik";
 import X from "../../assets/icons/x.svg";
 import Eye from "../../assets/icons/eye-off.svg";
 import EyeOn from "../../assets/icons/eye-on.svg";
-// import { createUserInstanceInDB, registerAPI } from "../../services/firebaseAPI";
-import s from "./RegistrationModal.module.scss";
 import { registerUserApi } from "../../services/backendAPI";
+import s from "./RegistrationModal.module.scss";
 
 const RegistrationSchema = Yup.object().shape({
   role: Yup.string().required(),

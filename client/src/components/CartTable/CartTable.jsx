@@ -8,9 +8,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CustomAccentButton from "../CustomAccentButton/CustomAccentButton";
 import { useCallback, useEffect, useState } from "react";
-import s from "./CartTable.module.scss";
 import { addOrderApi } from "../../services/backendAPI";
 import { useNavigate } from "react-router-dom";
+import s from "./CartTable.module.scss";
 
 const ItemRow = ({ rows, row, handleRemoveFromCart, setSum }) => {
   const [editable, setEditable] = useState(false);

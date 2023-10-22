@@ -4,9 +4,8 @@ import { CSSTransition } from "react-transition-group";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import X from "../../assets/icons/x.svg";
-// import { loginAPI } from "../../services/firebaseAPI";
-import s from "./EditItemModal.module.scss";
 import { editItemApi } from "../../services/backendAPI";
+import s from "./EditItemModal.module.scss";
 
 const ItemSchema = Yup.object().shape({
   name: Yup.string().required("Required"),

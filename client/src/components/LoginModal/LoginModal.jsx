@@ -6,9 +6,8 @@ import { useFormik } from "formik";
 import X from "../../assets/icons/x.svg";
 import Eye from "../../assets/icons/eye-off.svg";
 import EyeOn from "../../assets/icons/eye-on.svg";
-// import { loginAPI } from "../../services/firebaseAPI";
-import s from "./LoginModal.module.scss";
 import { loginUserApi } from "../../services/backendAPI";
+import s from "./LoginModal.module.scss";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),

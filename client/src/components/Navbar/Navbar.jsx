@@ -10,8 +10,8 @@ import {
   SIDEBAR_DATA_LOGGED_OUT,
 } from "../../utils/constants";
 import NavbarAuth from "../NavbarAuth/NavbarAuth";
-import s from "./Navbar.module.scss";
 import ModalPortal from "../ModalPortal/ModalPortal";
+import s from "./Navbar.module.scss";
 
 const Navbar = ({
   isLoggedIn,

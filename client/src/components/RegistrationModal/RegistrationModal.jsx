@@ -29,8 +29,7 @@ const RegistrationSchema = Yup.object().shape({
     .min(6, "Must contain 6 characters or more")
     .required("Required"),
   password_confirmation: Yup.string()
-    .min(6, "Must contain 6 characters or more")
-    .required("Required"),
+    .oneOf([Yup.ref('password'), null], "Passwords don't match").required('Confirm Password is required'),
 });
 
 const RegistrationModal = ({
@@ -47,7 +46,7 @@ const RegistrationModal = ({
   const nodeRef = useRef(null);
   const formik = useFormik({
     initialValues: {
-      role: "admin",
+      role: "user",
       first_name: "",
       last_name: "",
       email: "",
@@ -68,7 +67,7 @@ const RegistrationModal = ({
         throwSuccessPopup(`Welcome to the shop, ${response.user.first_name}!`);
         actions.resetForm({
           values: {
-            role: "admin",
+            role: "user",
             first_name: "",
             last_name: "",
             email: "",

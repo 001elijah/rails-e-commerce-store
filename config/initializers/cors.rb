@@ -14,6 +14,13 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     end
 
     allow do
+        origins 'https://001elijah.github.io/rails-e-commerce-store'
+        resource '*',
+            headers: :any,
+            methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
+    end
+
+    allow do
         origins 'https://rails-e-ecommerce-store.onrender.com'
         resource '*',
             headers: :any,

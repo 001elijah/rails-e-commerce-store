@@ -1,6 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
-        origins 'https://001elijah.github.io/rails-e-commerce-store'
+        origins 'https://001elijah.github.io/rails-e-commerce-store/'
 
         resource '*',
             headers: :any,

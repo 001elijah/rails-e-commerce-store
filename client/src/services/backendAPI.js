@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = "http://localhost:3000";
-axios.defaults.baseURL = "https://rails-e-ecommerce-store.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
+// axios.defaults.baseURL = "https://rails-e-ecommerce-store.onrender.com";
 
 // --------------------------------------------AUTH----------------------//
 
@@ -70,7 +70,7 @@ export const addOrderApi = async (orderData) => {
 };
 
 export const getUserOrdersApi = async (userId) => {
-  const { data } = await axios.get("/react_orders.json");
+  const { data } = await axios.get("/react_orders.json", {withCredentials: true });
   const filteredData = data.filter((order) => order.react_user_id === userId);
   return filteredData;
 };

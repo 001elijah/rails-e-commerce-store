@@ -6,7 +6,12 @@ class ReactOrdersController < ApplicationController
     end
 
     def create
-        @react_order = @current_react_user.react_orders.create!(
+        # @react_order = @current_react_user.react_orders.create!(
+        # react_user_id: params["user_id"],
+        # amount: params["amount"]
+        # )
+        
+        @react_order = ReactOrder.create!(
         react_user_id: params["user_id"],
         amount: params["amount"]
         )

@@ -76,6 +76,7 @@ const RegistrationModal = ({
         });
         setCurrentUser(response.user);
         setIsModalOpen(false);
+        document.body.style.overflow = "unset";
       } catch (error) {
         throwErrorPopup(error.message);
       }

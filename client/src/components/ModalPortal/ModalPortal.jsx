@@ -6,7 +6,7 @@ import Backdrop from "../Backdrop/Backdrop";
 const modalRoot = document.getElementById("modal-root");
 const windowRoot = document.getElementById("window-root");
 
-const ModalPortal = ({ children, isModalOpen, setIsModalOpen }) => {
+const ModalPortal = ({ children, isModalOpen = false, setIsModalOpen }) => {
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = "hidden";

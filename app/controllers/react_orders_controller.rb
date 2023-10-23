@@ -6,9 +6,7 @@ class ReactOrdersController < ApplicationController
     end
 
     def create
-        current_react_user = ReactUser.find(session[:user_id])
-        
-        @react_order = current_react_user.react_orders.create!(
+        @react_order = @current_react_user.react_orders.create!(
         react_user_id: params["user_id"],
         amount: params["amount"]
         )

@@ -5,6 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="/rails-e-commerce-store/assets/favicon-4b12d6c8.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>e-commerce-shop</title>
+    <script type="text/javascript">
+      (function (l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (s) {
+              return s.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash,
+          );
+        }
+      })(window.location);
+    </script>
     <script type="module" crossorigin src="/rails-e-commerce-store/assets/index-c6beca88.js"></script>
     <link rel="stylesheet" href="/rails-e-commerce-store/assets/index-301f5150.css">
   </head>

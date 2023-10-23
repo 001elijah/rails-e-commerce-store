@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+    include CurrentUserConcern
+
     def create
         @user = ReactUser
                         .find_by(email: params["user"]["email"])
@@ -18,19 +20,15 @@ class SessionsController < ApplicationController
     end
 
     def logged_in
-        if session[:user_id]
-            @current_react_user = ReactUser.find(session[:user_id])
-
-            if @current_react_user
-                render json: {
-                    logged_in: true,
-                    user: @current_react_user
-                }
-            else
-                render json: {
-                    logged_in: false
-                }
-            end
+        if @current_react_user
+            render json: {
+                logged_in: true,
+                user: @current_react_user
+            }
+        else
+            render json: {
+                logged_in: false
+            }
         end
     end
 

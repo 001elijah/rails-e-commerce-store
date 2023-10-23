@@ -26,6 +26,9 @@ const ItemsList = ({
   const handleToggleView = () => {
     setEnableTableView(!enableTableView);
   };
+  if (items.length === 0) {
+    return <div className={s.loader}></div>;
+  }
   return (
     <>
       <h1 className={s.title}>Items</h1>

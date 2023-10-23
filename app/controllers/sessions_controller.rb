@@ -20,10 +20,12 @@ class SessionsController < ApplicationController
     end
 
     def logged_in
-        if @current_react_user
+        current_react_user = ReactUser.find(session[:user_id])
+
+        if current_react_user
             render json: {
                 logged_in: true,
-                user: @current_react_user
+                user: current_react_user
             }
         else
             render json: {

@@ -107,7 +107,7 @@ function App() {
     if (isLoggedIn) {
       (async () => {
         try {
-          const { orders } =
+          const orders =
             currentUser?.role === "admin"
               ? await getAllOrdersApi()
               : await getUserOrdersApi(currentUser?.id);

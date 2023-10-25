@@ -70,8 +70,8 @@ export const addOrderApi = async (orderData) => {
 };
 
 export const getUserOrdersApi = async (userId) => {
-  const { data } = await axios.get("/react_orders.json", {withCredentials: true });
-  const filteredData = data.filter((order) => order.react_user_id === userId);
+  const { data } = await axios.get("/react_orders.json", { withCredentials: true });
+  const filteredData = data.orders.filter((order) => order.react_user_id === userId);
   return filteredData;
 };
 
@@ -79,7 +79,7 @@ export const getAllOrdersApi = async () => {
   const { data } = await axios.get("/react_orders.json", {
     withCredentials: true,
   });
-  return data;
+  return data.orders;
 };
 
 // --------------------------------------------USERS----------------------//

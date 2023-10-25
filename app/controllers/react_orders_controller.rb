@@ -2,7 +2,19 @@ class ReactOrdersController < ApplicationController
     include CurrentUserConcern
 
     def index
-        @react_orders = ReactOrder.all
+        sql = 'SELECT * FROM "react_orders" INNER JOIN "react_users" ON "react_orders"."react_user_id" = "react_users"."id";'
+        react_orders = ActiveRecord::Base.connection.execute(sql)
+
+        if react_orders
+            render json: {
+                status: 200,
+                orders: react_orders
+            }
+        else
+            render json: {
+                status: 404
+            }
+        end
     end
 
     def create

@@ -16,18 +16,22 @@ export default function OrdersTable({ rows }) {
           <TableHead>
             <TableRow>
               <TableCell>User id</TableCell>
+              <TableCell>User name</TableCell>
               <TableCell align="right">Amount</TableCell>
               <TableCell align="right">Date</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
               <TableRow
-                key={row.created_at}
+                key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   {row.react_user_id}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {row.first_name}
                 </TableCell>
                 <TableCell align="right">${row.amount}</TableCell>
                 <TableCell align="right">

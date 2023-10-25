@@ -36,7 +36,7 @@ const LoginModal = ({
         const userData = { user: values };
         const response = await loginUserApi(userData);
         if (response.status === 401) {
-          throw new Error("Login error!");
+          throw new Error("Wrong email or password!");
         }
         setIsLoggedIn(true);
         throwSuccessPopup(`Welcome back, ${response.user.first_name}!`);

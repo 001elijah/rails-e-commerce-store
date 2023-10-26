@@ -27,7 +27,10 @@ class ReactOrdersController < ApplicationController
 
             # adding user's first_name to the existing object before response
             @react_order = @react_order.attributes
-            @react_order["first_name"] = @current_react_user.first_name
+            
+            if @current_react_user
+                @react_order["first_name"] = @current_react_user.first_name
+            end
 
             render json: {
                 status: :created,

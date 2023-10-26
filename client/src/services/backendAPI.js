@@ -1,7 +1,7 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:3000";
-// axios.defaults.baseURL = "https://rails-e-ecommerce-store.onrender.com";
+// axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://rails-e-ecommerce-store.onrender.com";
 
 // --------------------------------------------AUTH----------------------//
 
@@ -66,6 +66,13 @@ export const addOrderApi = async (orderData) => {
   const { data } = await axios.post("/react_orders", orderData, {
     withCredentials: true,
   });
+  const orderItems = { items: orderData.items.map(item => { return {
+      react_order_id: data.order.id,
+      item_id: item.id,
+      quantity: item.quantity,
+    };
+  })}
+  await addOrderItems(orderItems);
   return data;
 };
 
@@ -81,6 +88,20 @@ export const getAllOrdersApi = async () => {
   });
   return data.orders;
 };
+
+// --------------------------------------------ORDER_ITEMS----------------------//
+const addOrderItems = async (orderItems) => {
+  await axios.post("/react_order_items", orderItems, {
+    withCredentials: true,
+  });
+}
+
+export const getOrderItems = async (orderId) => {
+  const { data } = await axios.get(`/react_order_items/${orderId}`, {
+    withCredentials: true,
+  });
+  return data;
+}
 
 // --------------------------------------------USERS----------------------//
 

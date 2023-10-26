@@ -2,7 +2,7 @@ class ReactOrdersController < ApplicationController
     include CurrentUserConcern
 
     def index
-        sql = 'SELECT * FROM "react_orders" INNER JOIN "react_users" ON "react_orders"."react_user_id" = "react_users"."id";'
+        sql = 'SELECT * FROM "react_users" INNER JOIN "react_orders" ON "react_users"."id" = "react_orders"."react_user_id";'
         react_orders = ActiveRecord::Base.connection.execute(sql)
 
         if react_orders
@@ -24,6 +24,11 @@ class ReactOrdersController < ApplicationController
         )
 
         if @react_order
+
+            # adding user's first_name to the existing object before response
+            @react_order = @react_order.attributes
+            @react_order["first_name"] = @current_react_user.first_name
+
             render json: {
                 status: :created,
                 order: @react_order

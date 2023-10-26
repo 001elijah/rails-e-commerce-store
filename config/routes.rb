@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :react_users
   
   resources :react_orders
+  resources :react_order_items
   # get :react_orders, to: "react_orders#react_orders"
 
   resources :sessions, only: :create

@@ -9,5 +9,5 @@ export default defineConfig({
     },
   },
   plugins: [react()],
-  base: "/rails-e-commerce-store/",
+  base: "/rails-e-commerce-store",
 });

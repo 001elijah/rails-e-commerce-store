@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_22_163559) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_26_072429) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_22_163559) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "react_order_items", force: :cascade do |t|
+    t.bigint "react_order_id", null: false
+    t.bigint "item_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_react_order_items_on_item_id"
+    t.index ["react_order_id"], name: "index_react_order_items_on_react_order_id"
   end
 
   create_table "react_orders", force: :cascade do |t|
@@ -81,5 +91,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_22_163559) do
   add_foreign_key "orderables", "carts"
   add_foreign_key "orderables", "items"
   add_foreign_key "orders", "users"
+  add_foreign_key "react_order_items", "items"
+  add_foreign_key "react_order_items", "react_orders"
   add_foreign_key "react_orders", "react_users"
 end

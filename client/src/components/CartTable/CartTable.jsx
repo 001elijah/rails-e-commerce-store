@@ -66,7 +66,6 @@ const ItemRow = ({ rows, row, handleRemoveFromCart, setSum }) => {
           </div>
         )}
       </TableCell>
-      <TableCell align="right">Manage</TableCell>
       <TableCell align="right">
         ${Math.round(+row.price * row.quantity * 100) / 100}
       </TableCell>
@@ -97,6 +96,7 @@ export default function CartTable({
   const handleBuy = async () => {
     try {
       const response = await addOrderApi({
+        items: rows,
         user_id: currentUser?.id,
         amount: Math.round(sum * 100) / 100,
       });
@@ -119,7 +119,6 @@ export default function CartTable({
               <TableCell align="right">Description</TableCell>
               <TableCell align="right">Price</TableCell>
               <TableCell align="right">Q-ty</TableCell>
-              <TableCell align="right">Manage</TableCell>
               <TableCell align="right">Total</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>

@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  react_order: one
+  item: one
+  quantity: 1
+
+two:
+  react_order: two
+  item: two
+  quantity: 1

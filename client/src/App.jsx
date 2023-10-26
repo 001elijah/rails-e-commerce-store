@@ -175,7 +175,7 @@ function App() {
               />
             }
           />
-          <Route path="/orders" element={<OrdersPage orders={orders} />} />
+          <Route path="/orders" element={<OrdersPage orders={orders} throwErrorPopup={throwErrorPopup} />} />
           <Route
             path="/users"
             element={<AllUsersPage currentUser={currentUser} users={users} />}
